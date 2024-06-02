@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Help = () => {
+const Dashboard = () => {
   return (
     <div>
       {/* Your component's JSX content */}
-      <h1>Help</h1>
+      <h1>Dashboard</h1>
       {/* ... */}
     </div>
   );
 };
 
-export default Help;
+export default Dashboard;

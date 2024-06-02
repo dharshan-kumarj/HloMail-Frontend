@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Templates from "./pages/Templates";
-import Help from "./pages/Help";
-import Price from "./pages/Price";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/templates" element={<Templates />} />
-      <Route path="/help" element={<Help />} />
-      <Route path="/price" element={<Price />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
