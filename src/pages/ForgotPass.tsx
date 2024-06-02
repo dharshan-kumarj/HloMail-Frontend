@@ -16,27 +16,27 @@ const ForgotPass = () => {
   return (
     <>
       <main className="vh-100 d-flex flex-column" style={{ backgroundColor: "#FFFFFF" }}>
-        <div className="container-fluid p-5" >
-            <div className="row justify-content-between align-items-center">
-                <div className="col-auto">
-                <div className="d-flex align-items-center mb-3">
-                    <div className="col-12">
-                    <h1 className="text-start" style={{ color: "#aa14f0" }}>
-                        HloMail
-                    </h1>
-                    </div>
+        <div className="container-fluid p-3 p-md-5">
+          <div className="row justify-content-between align-items-center">
+            <div className="col-auto">
+              <div className="d-flex align-items-center mb-3">
+                <div className="col-12">
+                  <h1 className="text-start" style={{ color: "#aa14f0" }}>
+                    HloMail
+                  </h1>
                 </div>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
-        <div className="container d-flex justify-content-center align-items-center flex-grow-1">
-          <div className="row justify-content-center">
-            <div className="col-md-10 col-lg-8 col-xl-12">
+        <div className="container d-flex flex-column justify-content-center align-items-center flex-grow-1">
+          <div className="row justify-content-center w-100">
+            <div className="col-md-10 col-lg-8 col-xl-6">
               <div
                 className="card mx-auto"
                 style={{
                   maxWidth: '800px',
-                  width: '600px',
+                  width: '100%',
                   height: '400px',
                   backgroundColor: "#FFFFFF",
                   borderRight: '7px solid #aa14f0',
@@ -62,7 +62,7 @@ const ForgotPass = () => {
                     </div>
                     <div className="d-flex pt-3 d-grid gap-2 col-12 mx-auto justify-content-center">
                       <button type="submit" className="btn btn-lg text-white form-control" style={{ backgroundColor: "#aa14f0" }}>
-                      Change password
+                        Change password
                       </button>
                     </div>
                   </form>

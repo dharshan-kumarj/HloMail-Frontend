@@ -137,23 +137,23 @@ function Register() {
 
   return (
     <main className="vh-100 d-flex flex-column" style={{ backgroundColor: "#FFFFFF" }}>
-      <div className="container-fluid p-5">
+      <div className="container-fluid p-3 p-md-5">
         <div className="row justify-content-between align-items-center">
           <div className="col-auto">
             <div className="d-flex align-items-center mb-3">
               <div className="col-12">
                 <h1 className="text-start" style={{ color: "#aa14f0" }}>
-                HloMail 
+                  HloMail
                 </h1>
               </div>
             </div>
           </div>
           <div className="col-auto d-flex align-items-center">
-            <button className="btn btn-outline-light me-3" style={{ backgroundColor: "#aa14f0", border: '1px solid #aa14f0' }}>
+            <button className="btn btn-outline-light me-3 mb-2 mb-md-0" style={{ backgroundColor: "#aa14f0", border: '1px solid #aa14f0' }}>
               Back to Home
             </button>
             <button
-              className="btn btn-outline-light"
+              className="btn btn-outline-light mb-2 mb-md-0"
               style={{ color: "#aa14f0", border: "1px solid #aa14f0" }}
               onClick={() => window.location.href = "http://localhost:5173/login"}
             >
@@ -163,14 +163,14 @@ function Register() {
         </div>
       </div>
       <div className="container d-flex justify-content-center align-items-center flex-grow-1">
-        <div className="row justify-content-center">
-          <div className="col-md-10 col-lg-8 col-xl-12">
+        <div className="row justify-content-center w-100">
+          <div className="col-md-10 col-lg-8 col-xl-6">
             <div
               className="card mx-auto"
               style={{
                 maxWidth: '800px',
-                width: '600px',
-                height: showOtpInput ? '700px' : '500px', // Apply height based on showOtpInput
+                width: '100%',
+                height: showOtpInput ? '700px' : '500px',
                 backgroundColor: "#FFFFFF",
                 borderRight: '7px solid #aa14f0',
                 borderBottom: '7px solid #aa14f0',
@@ -234,7 +234,7 @@ function Register() {
                         <button
                           type="button"
                           className="btn btn-dark btn-lg me-3"
-                          style={{ backgroundColor: "#aa14f0",color:"black" }}
+                          style={{ backgroundColor: "#aa14f0", color: "black" }}
                           onClick={handleVerify}
                         >
                           Verify
