@@ -1,0 +1,79 @@
+import React, { useState } from 'react';
+
+const ForgotPass = () => {
+  const [email, setEmail] = useState('');
+
+  const handleEmailChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    // Handle form submission with the entered email
+    console.log('Submitted email:', email);
+  };
+
+  return (
+    <>
+      <main className="vh-100 d-flex flex-column" style={{ backgroundColor: "#FFFFFF" }}>
+        <div className="container-fluid p-5" >
+            <div className="row justify-content-between align-items-center">
+                <div className="col-auto">
+                <div className="d-flex align-items-center mb-3">
+                    <div className="col-12">
+                    <h1 className="text-start" style={{ color: "#aa14f0" }}>
+                        HloMail
+                    </h1>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div className="container d-flex justify-content-center align-items-center flex-grow-1">
+          <div className="row justify-content-center">
+            <div className="col-md-10 col-lg-8 col-xl-12">
+              <div
+                className="card mx-auto"
+                style={{
+                  maxWidth: '800px',
+                  width: '600px',
+                  height: '400px',
+                  backgroundColor: "#FFFFFF",
+                  borderRight: '7px solid #aa14f0',
+                  borderBottom: '7px solid #aa14f0',
+                  marginTop: '-150px',
+                }}
+              >
+                <div className="card-body d-flex flex-column justify-content-center align-items-center">
+                  <h5 className="card-title text-center fs-1 mb-1" style={{ color: "#aa14f0" }}>
+                    Reset Password
+                  </h5>
+                  <h3 className='fs-6 text-dark mb-4' style={{ color: "#D9D9D9" }}> Change your password</h3>
+                  <form className="w-100" onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                      <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Enter Your Registered Email"
+                        value={email}
+                        onChange={handleEmailChange}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex pt-3 d-grid gap-2 col-12 mx-auto justify-content-center">
+                      <button type="submit" className="btn btn-lg text-white form-control" style={{ backgroundColor: "#aa14f0" }}>
+                      Change password
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+};
+
+export default ForgotPass;

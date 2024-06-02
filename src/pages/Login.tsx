@@ -69,7 +69,7 @@ const Login = () => {
       <div className="container d-flex justify-content-center align-items-center flex-grow-1">
         <div className="row justify-content-center">
           <div className="col-md-10 col-lg-8 col-xl-12">
-            <div className="card mx-auto" style={{ maxWidth: '800px', width: '600px', height: '600px', backgroundColor: "#FFFFFF", borderRight: '7px solid #aa14f0', borderBottom: '7px solid #aa14f0', marginTop: '-150px' }}>
+            <div className="card mx-auto" style={{ maxWidth: '800px', width: '600px', height: '500px', backgroundColor: "#FFFFFF", borderRight: '7px solid #aa14f0', borderBottom: '7px solid #aa14f0', marginTop: '-150px' }}>
               <div className="card-body d-flex flex-column justify-content-center align-items-center">
                 <h5 className="card-title text-center fs-1 mb-4" style={{ color: "#aa14f0" }}>Login</h5>
                 <h3 className='fs-6 text-black' style={{ color: "#D9D9D9" }}> Sign in to your Account</h3>
