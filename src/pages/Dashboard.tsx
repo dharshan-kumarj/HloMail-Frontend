@@ -192,7 +192,7 @@ const Dashboard: React.FC = () => {
       <div className="sidebar left-sidebar" style={{ top: "10px" }}>
         <div className="card rounded rounded shadow bg-white rounded">
           <img src={img_logo} alt="" />
-          <div className="d-flex flex-column" style={{ height: "80vh" }}>
+          <div className="d-flex flex-column" style={{ height: "65vh" }}>
             <ul className="nav flex-column">
               <li className="nav-item mt-3">
                 <a className="nav-link active" href="#">
