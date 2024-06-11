@@ -98,14 +98,17 @@ const Dashboard: React.FC = () => {
       </span>
       <div className="row">
         <div className="col-1">
-          <span className="toggle-btn" style={{ right: "30px" }}>
+          <span
+            className="toggle-btn"
+            style={{ right: "30px", position: "absolute" }}
+          >
             <img src={img_profile} alt="" height="45" width="45" />
           </span>
         </div>
         <div className="col-1">
           <span
             className="toggle-btn"
-            style={{ right: "80px" }}
+            style={{ right: "80px", position: "absolute" }}
             onClick={() => toggleSidebar("right")}
           >
             <img src={img_mail} alt="" />

@@ -38,9 +38,11 @@ body {
 .toggle-left {
   left: 0px;
   top: 50%;
+  position: fixed;
 }
 .toggle-right {
   right: 20px;
+  position: absolute;
 }
 .show {
   transform: translateX(0) !important;
