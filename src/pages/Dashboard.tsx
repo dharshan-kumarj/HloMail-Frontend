@@ -13,6 +13,7 @@ const Dashboard: React.FC = () => {
   const [IsVisible, setIsVisible] = useState(false);
   const [credit, setCredit] = useState(false);
   const [interactionData, setInteractionData] = useState<Record<string, number>>({});
+  const [timePeriod, setTimePeriod] = useState("day");
 
   const handleToggle = () => {
     setIsVisible(!IsVisible);
@@ -134,9 +135,51 @@ const Dashboard: React.FC = () => {
     return filledData;
   };
 
+  const fetchInteractionData = async (timePeriod: string) => {
+    const token = Cookies.get('token');
+    const api_key = 'e7a82f9f241ea70a00fd2ba7542a06a6'; // replace with your actual API key
+
+    if (!token) {
+      window.location.href = 'https://hlomail-frontend.sanjaysagar.com/login';
+      return;
+    }
+
+    try {
+      const response = await fetch('https://hlomail.sanjaysagar.com/logs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ api_key: api_key, time_period: timePeriod })
+      });
+
+      if (response.status === 401) {
+        window.location.href = 'https://hlomail-frontend.sanjaysagar.com/login';
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log(data)
+      const filledData = ensureMinimumDataPoints(data.interactions);
+      setInteractionData(filledData);
+      console.log('API Logs Response:', data);
+    } catch (error) {
+      console.log('API Logs Error:', error);
+    }
+  };
+
   useEffect(() => {
     checkTokenAndFetchData();
   }, []);
+
+  useEffect(() => {
+    fetchInteractionData(timePeriod);
+  }, [timePeriod]);
 
   useEffect(() => {
     handleResize();
@@ -229,23 +272,27 @@ const Dashboard: React.FC = () => {
                   <h5>Interactions</h5>
                 </div>
 
-                <div className="col-2 d-none d-lg-flex">
+                <div className="col-2 d-none d-lg-flex" onClick={() => setTimePeriod("today")}>
                   <p>Day</p>
                 </div>
-                <div className="col-2 d-none d-lg-flex">
+                <div className="col-2 d-none d-lg-flex" onClick={() => setTimePeriod("week")}>
                   <p>Week</p>
                 </div>
-                <div className="col-2 d-none d-lg-flex">
+                <div className="col-2 d-none d-lg-flex" onClick={() => setTimePeriod("month")}>
                   <p>Month</p>
                 </div>
-                <div className="col-2 d-none d-lg-flex">
+                <div className="col-2 d-none d-lg-flex" onClick={() => setTimePeriod("year")}>
                   <p>Year</p>
                 </div>
               </div>
               <div className="row d-lg-none">
                 <div className="col-12">
-                  <select className="form-select">
-                    <option value="day">Day</option>
+                  <select
+                    className="form-select"
+                    value={timePeriod}
+                    onChange={(e) => setTimePeriod(e.target.value)}
+                  >
+                    <option value="today">Day</option>
                     <option value="week">Week</option>
                     <option value="month">Month</option>
                     <option value="year">Year</option>
