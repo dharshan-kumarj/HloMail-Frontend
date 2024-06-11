@@ -36,10 +36,17 @@ const Login = () => {
       if (response.ok) {
         // Save the token in the cookies
         Cookies.set("token", responseData.token);
+        alert(responseData.token)
         // Redirect to the dashboard
         window.location.href =
           "https://hlomail-frontend.sanjaysagar.com/dashboard";
-      } else {
+      } 
+      else if (response.status==401){
+        setErrorMessage(
+          responseData.message || "Incorrent username or password"
+        );
+      }
+      else {
         setErrorMessage(
           responseData.message || "An error occurred during login"
         );
@@ -77,7 +84,7 @@ const Login = () => {
               className="btn btn-outline-light mb-2 mb-md-0"
               style={{ color: "#aa14f0", border: "1px solid #aa14f0" }}
               onClick={() =>
-                (window.location.href = "http://localhost:5173/register")
+                (window.location.href = "https://hlomail-frontend.sanjaysagar.com/register")
               }
             >
               Register
@@ -161,7 +168,7 @@ const Login = () => {
                       style={{ color: "#aa14f0", marginLeft: "10px" }}
                       onClick={() =>
                         (window.location.href =
-                          "http://localhost:5173/forgotpass")
+                          "https://hlomail-frontend.sanjaysagar.com/forgotpass")
                       }
                     >
                       {" "}
@@ -175,7 +182,7 @@ const Login = () => {
                       style={{ border: "1px solid #aa14f0" }}
                       onClick={() =>
                         (window.location.href =
-                          "http://localhost:5173/register")
+                          "https://hlomail-frontend.sanjaysagar.com/register")
                       }
                     >
                       Register New Account

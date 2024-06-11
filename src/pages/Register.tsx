@@ -34,7 +34,7 @@ function Register() {
       password,
     };
 
-    fetch('http://localhost:8000/register', {
+    fetch('https://hlomail.sanjaysagar.com/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ function Register() {
           alert('OTP has been sent to your email. Please enter the OTP to verify.');
           setShowOtpInput(true); // Set showOtpInput to true
         } else {
-          console.error('Error:', data.message);
+          alert( data.error);
         }
       })
       .catch((error) => {
@@ -57,7 +57,7 @@ function Register() {
   };
 
   const handleVerify = () => {
-    fetch('http://localhost:8000/verify', {
+    fetch('https://hlomail.sanjaysagar.com/verify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ function Register() {
           console.log(data);
 
           try {
-            const response = await fetch('http://localhost:8000/login', {
+            const response = await fetch('https://hlomail.sanjaysagar.com/login', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ function Register() {
               // Save the token in the cookies
               Cookies.set('token', responseData.token);
               // Redirect to the dashboard
-              window.location.href = 'http://localhost:5173/dashboard';
+              window.location.href = 'https://hlomail-frontend.sanjaysagar.com/dashboard';
             } else {
               setErrorMessage(responseData.message || 'An error occurred during login');
             }
@@ -97,7 +97,7 @@ function Register() {
           }
 
           // Redirect to the dashboard
-          window.location.href = 'http://localhost:5173/dashboard';
+          window.location.href = 'https://hlomail-frontend.sanjaysagar.com/dashboard';
         } else {
           alert('Wrong OTP. Please try again.');
         }
@@ -136,6 +136,7 @@ function Register() {
 
 
   return (
+    <>
     <main className="vh-100 d-flex flex-column" style={{ backgroundColor: "#FFFFFF" }}>
       <div className="container-fluid p-3 p-md-5">
         <div className="row justify-content-between align-items-center">
@@ -155,7 +156,7 @@ function Register() {
             <button
               className="btn btn-outline-light mb-2 mb-md-0"
               style={{ color: "#aa14f0", border: "1px solid #aa14f0" }}
-              onClick={() => window.location.href = "http://localhost:5173/login"}
+              onClick={() => window.location.href = "https://hlomail-frontend.sanjaysagar.com/login"}
             >
               Login
             </button>
@@ -256,6 +257,7 @@ function Register() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 
