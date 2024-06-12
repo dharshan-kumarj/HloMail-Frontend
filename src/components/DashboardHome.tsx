@@ -3,12 +3,12 @@ import  { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/dashboard.css';
 import Cookies from 'js-cookie';
-import ChartComponent from '../components/ChartComponent';
+import ChartComponent from './ChartComponent';
 
 interface Props{
   api_key :string;
 }
-const ApiDashboard = ({api_key}:Props) => {
+const DashboardHome = ({api_key}:Props) => {
   const [credit, setCredit] = useState(false);
   const [interactionData, setInteractionData] = useState<Record<string, number>>({});
   const [timePeriod, setTimePeriod] = useState('day');
@@ -17,10 +17,6 @@ const ApiDashboard = ({api_key}:Props) => {
     const token = Cookies.get('token');
     
 
-    if (!token) {
-      window.location.href = 'https://hlomail-frontend.sanjaysagar.com/login';
-      return;
-    }
 
     try {
       const response = await fetch('https://hlomail.sanjaysagar.com/api-dashboard', {
@@ -77,7 +73,7 @@ const ApiDashboard = ({api_key}:Props) => {
 
   const fetchInteractionData = async (timePeriod: string) => {
     const token = Cookies.get('token');
-    const api_key = 'e7a82f9f241ea70a00fd2ba7542a06a6';
+   
 
     try {
       const response = await fetch('https://hlomail.sanjaysagar.com/logs', {
@@ -150,7 +146,7 @@ const ApiDashboard = ({api_key}:Props) => {
           <div className="card mt-3 shadow bg-white rounded">
             <div className="card-body">
               <h5 className="card-title">Your API key</h5>
-              <p className="card-text">G8nQCflexBZfJ5dDickWu0fUx3jc5sX4Vdsat2</p>
+              <p className="card-text">{api_key}</p>
             </div>
           </div>
           <div className="card mt-3 shadow bg-white rounded">
@@ -195,4 +191,4 @@ const ApiDashboard = ({api_key}:Props) => {
   );
 };
 
-export default ApiDashboard;
+export default DashboardHome;

@@ -1,11 +1,11 @@
-// src/components/Dashboard.tsx
-import React, { useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect, useState } from "react";
+
 import "../styles/dashboard.css";
 import Cookies from "js-cookie";
 import RightSidebar from "../components/RightSidebar";
 import LeftSidebar from "../components/LeftSidebar";
-import ApiDashboard from "../components/ApiDashboard";
+import DashboardHome from "../components/DashboardHome";  
+import ApiKeyComponent from "../components/DashboardApiKeys";
 
 const checkToken = async () => {
   const token = Cookies.get("token");
@@ -15,16 +15,36 @@ const checkToken = async () => {
     return;
   }
 };
-useEffect(() => {
-  checkToken();
-}, []);
 
 const Dashboard: React.FC = () => {
+  const [selectedComponent, setSelectedComponent] = useState<string>("Dashboard");
+  const [selectedApiKey, setSelectedApiKey] = useState<string>("");
+
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  const handleApiKeyClick = (apiKey: string) => {
+    setSelectedApiKey(apiKey);
+    setSelectedComponent("Dashboard");
+  };
+
+  const renderComponent = () => {
+    switch (selectedComponent) {
+      case "Dashboard":
+        return <DashboardHome api_key={selectedApiKey} />;
+      case "API Key":
+        return <ApiKeyComponent handleApiKeyClick={handleApiKeyClick} />;
+      default:
+        return <DashboardHome api_key="*" />;
+    }
+  };
+
   return (
     <>
-      <LeftSidebar />
+      <LeftSidebar setSelectedComponent={setSelectedComponent} />
       <RightSidebar />
-      <ApiDashboard api_key="e7a82f9f241ea70a00fd2ba7542a06a6"></ApiDashboard>
+      {renderComponent()}
     </>
   );
 };
