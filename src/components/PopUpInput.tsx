@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
-interface AlertProps {
+interface PopUpInputProps {
   show: boolean;
   onHide: () => void;
   onSubmit: (value: string) => void;
 }
 
-const Alert: React.FC<AlertProps> = ({ show, onHide, onSubmit }) => {
+const PopUpInput: React.FC<PopUpInputProps> = ({ show, onHide, onSubmit }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (event: { preventDefault: () => void; }) => {
@@ -19,7 +19,7 @@ const Alert: React.FC<AlertProps> = ({ show, onHide, onSubmit }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Alert</Modal.Title>
+        <Modal.Title>PopUpInput</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit}>
@@ -44,4 +44,4 @@ const Alert: React.FC<AlertProps> = ({ show, onHide, onSubmit }) => {
   );
 };
 
-export default Alert;
+export default PopUpInput;
