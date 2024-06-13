@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import PopUpInput from "./PopUpInput";
+import EditApiPopUp from "./EditApiPopUp";
+import GenerateApiPopUp from "./GenerateApiPopUp";
 
 interface DashboardApiKeys {
   handleApiKeyClick: (component: string) => void;
@@ -9,7 +10,8 @@ interface DashboardApiKeys {
 const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
   handleApiKeyClick,
 }) => {
-  const [modalShow, setModalShow] = React.useState(false);
+  const [editApiModalShow, setEditApiModalShow] = React.useState(false);
+  const [generateApiModalShow, setGenerateApiModalShow] = React.useState(false);
   const [apiKeyData, setApiKeyData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedApiKey, setSelectedApiKey] = useState("");
@@ -84,7 +86,23 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
       const body = { api_key: selectedApiKey, title: value };
       FetchData("POST", "https://hlomail.sanjaysagar.com/edit-apikey", headers, body);
     }
-    setModalShow(false);
+    setEditApiModalShow(false);
+  };
+
+  const handleGeneratePopUpSubmit = async (value: any) => {
+    console.log(selectedApiKey, value);
+    console.log(action);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    if (action === "generate-apikey") {
+      const body = { api_type: value[0], title: value[1] };
+      FetchData("POST", "https://hlomail.sanjaysagar.com/add-apikey", headers, body);
+    }
+    setEditApiModalShow(false);
   };
 
   return (
@@ -93,10 +111,15 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
         <h1 className="text-center mb-4">API Keys</h1>
         <p className="text-center">List of API keys</p>
 
-        <PopUpInput
-          show={modalShow}
-          onHide={() => setModalShow(false)}
+        <EditApiPopUp
+          show={editApiModalShow}
+          onHide={() => setEditApiModalShow(false)}
           onSubmit={handleEditPopUpSubmit}
+        />
+        <GenerateApiPopUp
+          show={generateApiModalShow}
+          onHide={() => setGenerateApiModalShow(false)}
+          onSubmit={handleGeneratePopUpSubmit}
         />
         {loading ? (
           <p>Loading...</p>
@@ -105,7 +128,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
             <button
               className="btn btn-primary btn-sm me-2"
               onClick={() => {
-                setModalShow(true);
+                setGenerateApiModalShow(true);
                 setAction("generate-apikey");
               }}
             >
@@ -134,7 +157,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
                       <button
                         className="btn btn-primary btn-sm me-2"
                         onClick={() => {
-                          setModalShow(true);
+                          setEditApiModalShow(true);
                           setSelectedApiKey(item["api_key"]);
                           setAction("edit-apikey");
                         }}

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
-interface PopUpInputProps {
+interface EditApiPopUpProps {
   show: boolean;
   onHide: () => void;
   onSubmit: (value: string) => void;
 }
 
-const PopUpInput: React.FC<PopUpInputProps> = ({ show, onHide, onSubmit }) => {
+const EditApiPopUp: React.FC<EditApiPopUpProps> = ({ show, onHide, onSubmit }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (event: { preventDefault: () => void; }) => {
@@ -19,7 +19,7 @@ const PopUpInput: React.FC<PopUpInputProps> = ({ show, onHide, onSubmit }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>PopUpInput</Modal.Title>
+        <Modal.Title>EditApiPopUp</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit}>
@@ -44,4 +44,4 @@ const PopUpInput: React.FC<PopUpInputProps> = ({ show, onHide, onSubmit }) => {
   );
 };
 
-export default PopUpInput;
+export default EditApiPopUp;

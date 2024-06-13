@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "../styles/dashboard.css";
 import Cookies from "js-cookie";
-import RightSidebar from "../components/RightSidebar";
+import Inbox from "../components/Inbox";
 import LeftSidebar from "../components/LeftSidebar";
 import DashboardHome from "../components/DashboardHome";  
 import ApiKeyComponent from "../components/DashboardApiKeys";
@@ -43,7 +43,7 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <LeftSidebar setSelectedComponent={setSelectedComponent} />
-      <RightSidebar />
+      <Inbox />
       {renderComponent()}
     </>
   );
