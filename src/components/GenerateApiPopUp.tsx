@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/GenerateApiPopUP.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/GenerateApiPopUP.css";
 
 interface GenerateApiPopUpProps {
   show: boolean;
@@ -32,12 +32,15 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter" className="fs-3 modal-title">
+        <Modal.Title
+          id="contained-modal-title-vcenter"
+          className="fs-3 modal-title"
+        >
           Create Key
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={handleSubmit} style={{ backgroundColor: '#EEEDF3' }}>
+        <form onSubmit={handleSubmit} style={{ backgroundColor: "#EEEDF3" }}>
           <div className="mb-3">
             {/* <label htmlFor="inputValue h2 text-center" className="form-label">
             Name your API key
@@ -65,8 +68,12 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
               <option value="noreply">No reply</option>
             </select>
           </div>
-          <button type="submit" className="btn btn-primary submit" style={{ backgroundColor: '#aa14f0' }}>
-          Generate key
+          <button
+            type="submit"
+            className="btn btn-primary submit"
+            style={{ backgroundColor: "#aa14f0" }}
+          >
+            Generate key
           </button>
         </form>
       </Modal.Body>

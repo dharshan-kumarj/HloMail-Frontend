@@ -3,6 +3,8 @@ import Cookies from "js-cookie";
 import EditApiPopUp from "./EditApiPopUp";
 import GenerateApiPopUp from "./GenerateApiPopUp";
 import DeletePopUp from "./DeletePopUp";
+import edit_icon from "../images/dashboard/edit-icon.svg";
+import delete_icon from "../images/dashboard/delete-icon.svg";
 
 interface DashboardApiKeys {
   handleApiKeyClick: (component: string) => void;
@@ -45,7 +47,12 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
     fetchApiKeyData();
   }, []);
 
-  const FetchData = async (method: string, end_point: string, headers: any, body: any) => {
+  const FetchData = async (
+    method: string,
+    end_point: string,
+    headers: any,
+    body: any
+  ) => {
     try {
       const response = await fetch(end_point, {
         method: method,
@@ -83,7 +90,12 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
         Authorization: `Bearer ${token}`,
       };
       const body = { api_key: selectedApiKey };
-      FetchData("POST", "https://hlomail.sanjaysagar.com/delete-apikey", headers, body);
+      FetchData(
+        "POST",
+        "https://hlomail.sanjaysagar.com/delete-apikey",
+        headers,
+        body
+      );
     }
     setDeleteApiModalShow(false);
   };
@@ -97,17 +109,14 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
       Authorization: `Bearer ${token}`,
     };
 
-    if (action === "delete-apikey") {
-      console.log("deleting", selectedApiKey);
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-      const body = { api_key: selectedApiKey };
-      FetchData("POST", "https://hlomail.sanjaysagar.com/delete-apikey", headers, body);
-    } else if (action === "edit-apikey") {
+    if (action === "edit-apikey") {
       const body = { api_key: selectedApiKey, title: value };
-      FetchData("POST", "https://hlomail.sanjaysagar.com/edit-apikey", headers, body);
+      FetchData(
+        "POST",
+        "https://hlomail.sanjaysagar.com/edit-apikey",
+        headers,
+        body
+      );
     }
     setEditApiModalShow(false);
   };
@@ -123,7 +132,12 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
 
     if (action === "generate-apikey") {
       const body = { api_type: value[0], title: value[1] };
-      FetchData("POST", "https://hlomail.sanjaysagar.com/add-apikey", headers, body);
+      FetchData(
+        "POST",
+        "https://hlomail.sanjaysagar.com/add-apikey",
+        headers,
+        body
+      );
     }
     setGenerateApiModalShow(false);
   };
@@ -159,7 +173,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
                   <th>Title</th>
                   <th>API Key</th>
                   <th>Type</th>
-                  <th>Created On</th>
+
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -171,28 +185,32 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
                       {item["api_key"]}
                     </td>
                     <td>{item["type"]}</td>
-                    <td>{item["created_on"]}</td>
                     <td>
-                      <button
-                        className="btn btn-primary btn-sm me-2"
-                        onClick={() => {
-                          setEditApiModalShow(true);
-                          setSelectedApiKey(item["api_key"]);
-                          setAction("edit-apikey");
-                        }}
-                      >
-                        <i className="bi bi-pencil-square"></i> Edit
-                      </button>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => {
-                          setDeleteApiModalShow(true);
-                          setSelectedApiKey(item["api_key"]);
-                          setAction("delete-apikey");
-                        }}
-                      >
-                        <i className="bi bi-trash"></i> Delete
-                      </button>
+                      <div className="row">
+                        {" "}
+                        <div className="col">
+                          <img
+                            src={edit_icon}
+                            className="btn me-2"
+                            onClick={() => {
+                              setEditApiModalShow(true);
+                              setSelectedApiKey(item["api_key"]);
+                              setAction("edit-apikey");
+                            }}
+                          />
+                        </div>
+                        <div className="col">
+                          <img
+                            className=""
+                            src={delete_icon}
+                            onClick={() => {
+                              setDeleteApiModalShow(true);
+                              setSelectedApiKey(item["api_key"]);
+                              setAction("delete-apikey");
+                            }}
+                          />
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -200,7 +218,11 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
             </table>
             <button
               className="btn btn-primary btn-sm me-2 "
-              style={{ backgroundColor: '#aa14f0' ,padding: '0.5rem 2rem',fontSize: '1rem'}}
+              style={{
+                backgroundColor: "#aa14f0",
+                padding: "0.5rem 2rem",
+                fontSize: "1rem",
+              }}
               onClick={() => {
                 setGenerateApiModalShow(true);
                 setAction("generate-apikey");

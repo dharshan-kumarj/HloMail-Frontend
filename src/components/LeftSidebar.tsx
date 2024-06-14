@@ -67,7 +67,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                 <span className="nav-link active">
                   <img src={dashboard_icon} />
                   <a
-                    className="ps-2"
+                    className="ps-2 text-dark"
                     href="#"
                     onClick={() => setSelectedComponent("Dashboard")}
                   >

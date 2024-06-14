@@ -16,7 +16,7 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
 }) => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit(); // Return an array with input value and selected option
+    onSubmit();
     onHide();
   };
 
@@ -38,13 +38,23 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
       </Modal.Header>
       <Modal.Body>
         <form onSubmit={handleSubmit} style={{ backgroundColor: "#EEEDF3" }}>
-          <button
-            type="submit"
-            className="btn btn-primary submit"
-            style={{ backgroundColor: "#aa14f0" }}
-          >
-            Delete key
-          </button>
+          <div className="text-center mb-4">
+            Are you sure you want to delete API key? This action cannot be
+            undone.
+          </div>
+          <div className="d-flex justify-content-center">
+            <button
+              type="submit"
+              className="btn btn-danger submit"
+              style={{
+                backgroundColor: "#D42D2D",
+                padding: "0.5rem 12rem",
+                fontSize: "1rem",
+              }}
+            >
+              Delete key
+            </button>
+          </div>
         </form>
       </Modal.Body>
     </Modal>
