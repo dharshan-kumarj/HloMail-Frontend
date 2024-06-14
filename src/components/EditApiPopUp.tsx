@@ -7,17 +7,27 @@ interface EditApiPopUpProps {
   onSubmit: (value: string) => void;
 }
 
-const EditApiPopUp: React.FC<EditApiPopUpProps> = ({ show, onHide, onSubmit }) => {
+const EditApiPopUp: React.FC<EditApiPopUpProps> = ({
+  show,
+  onHide,
+  onSubmit,
+}) => {
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     onSubmit(inputValue);
     onHide();
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal
+      show={show}
+      onHide={onHide}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
       <Modal.Header closeButton>
         <Modal.Title>EditApiPopUp</Modal.Title>
       </Modal.Header>

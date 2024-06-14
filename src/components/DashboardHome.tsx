@@ -1,29 +1,78 @@
-// src/components/Dashboard.tsx
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/dashboard.css";
 import Cookies from "js-cookie";
 import ChartComponent from "./ChartComponent";
 
+interface ApiKeyData {
+  api_key: string;
+  title: string;
+}
+
+interface DashboardData {
+  credit: boolean;
+  today_intraction: Record<string, number>;
+}
+
 interface Props {
   api_key: string;
 }
 
-function find_today_intraction(interactions: { [x: number]: number; }){
-  var interaction = 0
-  for (var key in interactions){
-    interaction += interactions[key]
-  }
-  return interaction
-}
 const DashboardHome = ({ api_key }: Props) => {
-  const [credit, setCredit] = useState(false);
+  const [credit, setCredit] = useState<boolean>(false);
   const [interactionData, setInteractionData] = useState<
     Record<string, number>
   >({});
-  const [timePeriod, setTimePeriod] = useState("day");
-  const [todayIntraction, setTodayIntraction] = useState(0);
- 
+  const [timePeriod, setTimePeriod] = useState<string>("day");
+  const [todayIntraction, setTodayIntraction] = useState<number>(0);
+  const [apiKeys, setApiKeys] = useState<ApiKeyData[]>([]);
+  const [selectedApiKey, setSelectedApiKey] = useState<string>(api_key);
+
+  function find_today_intraction(interactions: { [x: number]: number }) {
+    var interaction = 0;
+    for (var key in interactions) {
+      interaction += interactions[key];
+    }
+    return interaction;
+  }
+
+  useEffect(() => {
+    const fetchApiKeys = async () => {
+      const token = Cookies.get("token");
+
+      try {
+        const response = await fetch(
+          "https://hlomail.sanjaysagar.com/dashboard",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status === 401) {
+          window.location.href =
+            "https://hlomail-frontend.sanjaysagar.com/login";
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        setApiKeys(data.data);
+        console.log("API Keys Response:", data);
+      } catch (error) {
+        console.error("API Keys Error:", error);
+      }
+    };
+
+    fetchApiKeys();
+  }, []);
+
   const FetchData = async () => {
     const token = Cookies.get("token");
 
@@ -36,8 +85,9 @@ const DashboardHome = ({ api_key }: Props) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          
-          body: JSON.stringify({ api_key: api_key=="*"?null:api_key }),
+          body: JSON.stringify({
+            api_key: selectedApiKey === "*" ? null : selectedApiKey,
+          }),
         }
       );
 
@@ -50,15 +100,48 @@ const DashboardHome = ({ api_key }: Props) => {
         throw new Error("Network response was not ok");
       }
 
-      const data = await response.json();
+      const data: DashboardData = await response.json();
       setCredit(data.credit);
-      setTodayIntraction( find_today_intraction(data.today_intraction));
-      console.log(todayIntraction)
+      setTodayIntraction(find_today_intraction(data.today_intraction));
       const filledData = ensureMinimumDataPoints(data.today_intraction);
       setInteractionData(filledData);
       console.log("API Response:", data);
     } catch (error) {
       console.error("API Error:", error);
+    }
+  };
+
+  const fetchInteractionData = async (timePeriod: string) => {
+    const token = Cookies.get("token");
+
+    try {
+      const response = await fetch("https://hlomail.sanjaysagar.com/logs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          api_key: selectedApiKey === "*" ? null : selectedApiKey,
+          time_period: timePeriod,
+        }),
+      });
+
+      if (response.status === 401) {
+        window.location.href = "https://hlomail-frontend.sanjaysagar.com/login";
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      const filledData = ensureMinimumDataPoints(data.interactions);
+      setInteractionData(filledData);
+      console.log("API Logs Response:", data);
+    } catch (error) {
+      console.error("API Logs Error:", error);
     }
   };
 
@@ -88,45 +171,17 @@ const DashboardHome = ({ api_key }: Props) => {
     return filledData;
   };
 
-  const fetchInteractionData = async (timePeriod: string) => {
-    const token = Cookies.get("token");
-
-    try {
-      const response = await fetch("https://hlomail.sanjaysagar.com/logs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ api_key: api_key=="*"?null:api_key , time_period: timePeriod }),
-      });
-
-      if (response.status === 401) {
-        window.location.href = "https://hlomail-frontend.sanjaysagar.com/login";
-        return;
-      }
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-      console.log(data);
-      const filledData = ensureMinimumDataPoints(data.interactions);
-      setInteractionData(filledData);
-      console.log("API Logs Response:", data);
-    } catch (error) {
-      console.log("API Logs Error:", error);
-    }
-  };
-
   useEffect(() => {
     FetchData();
-  }, []);
+  }, [selectedApiKey]);
 
   useEffect(() => {
     fetchInteractionData(timePeriod);
-  }, [timePeriod]);
+  }, [timePeriod, selectedApiKey]);
+
+  const handleApiKeyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedApiKey(event.target.value);
+  };
 
   return (
     <>
@@ -134,7 +189,10 @@ const DashboardHome = ({ api_key }: Props) => {
         <div className="container-fluid">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
-              <h1>Dashboard</h1>
+              <span>
+
+                <h1>Dashboard</h1>
+              </span>
               <p>
                 Welcome to your API's dashboard, Effortless API Integration for
                 Smarter Communication.
@@ -154,15 +212,37 @@ const DashboardHome = ({ api_key }: Props) => {
               <div className="card shadow bg-white rounded">
                 <div className="card-body">
                   <h5 className="card-title">Interactions</h5>
-                  <p className="card-text">{todayIntraction} Interactions today</p>
+                  <p className="card-text">
+                    {todayIntraction} Interactions today
+                  </p>
                 </div>
               </div>
             </div>
           </div>
           <div className="card mt-3 shadow bg-white rounded">
             <div className="card-body">
-              <h5 className="card-title">Your API key</h5>
-              <p className="card-text">{api_key}</p>
+              <div className="row">
+                <div className="col">
+                  <h5 className="card-title">Your API key</h5>
+                  {selectedApiKey}
+                </div>
+                <div className="col">
+                  <select
+                    className="form-select"
+                    value={selectedApiKey}
+                    onChange={handleApiKeyChange}
+                  >
+                    {apiKeys.map((apiKeyData) => (
+                      <option
+                        key={apiKeyData.api_key}
+                        value={apiKeyData.api_key}
+                      >
+                        {apiKeyData.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
           <div className="card mt-3 shadow bg-white rounded">
@@ -172,28 +252,28 @@ const DashboardHome = ({ api_key }: Props) => {
                   <h5>Interactions</h5>
                 </div>
                 <div
-                  className="col-2 d-none d-lg-flex"
+                  className="col-2 d-none d-lg-flex btn"
                   onClick={() => setTimePeriod("day")}
                 >
-                  <p>Day</p>
+                  <a>Day</a>
                 </div>
                 <div
-                  className="col-2 d-none d-lg-flex"
+                  className="col-2 d-none d-lg-flex btn"
                   onClick={() => setTimePeriod("week")}
                 >
-                  <p>Week</p>
+                  <a>Week</a>
                 </div>
                 <div
-                  className="col-2 d-none d-lg-flex"
+                  className="col-2 d-none d-lg-flex btn"
                   onClick={() => setTimePeriod("month")}
                 >
-                  <p>Month</p>
+                  <a>Month</a>
                 </div>
                 <div
-                  className="col-2 d-none d-lg-flex"
+                  className="col-2 d-none d-lg-flex btn"
                   onClick={() => setTimePeriod("year")}
                 >
-                  <p>Year</p>
+                  <a>Year</a>
                 </div>
               </div>
               <div className="row d-lg-none">

@@ -4,7 +4,7 @@ import "../styles/dashboard.css";
 import Cookies from "js-cookie";
 import Inbox from "../components/Inbox";
 import LeftSidebar from "../components/LeftSidebar";
-import DashboardHome from "../components/DashboardHome";  
+import DashboardHome from "../components/DashboardHome";
 import ApiKeyComponent from "../components/DashboardApiKeys";
 
 const checkToken = async () => {
@@ -17,7 +17,8 @@ const checkToken = async () => {
 };
 
 const Dashboard: React.FC = () => {
-  const [selectedComponent, setSelectedComponent] = useState<string>("Dashboard");
+  const [selectedComponent, setSelectedComponent] =
+    useState<string>("API Key");
   const [selectedApiKey, setSelectedApiKey] = useState<string>("");
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const Dashboard: React.FC = () => {
       case "API Key":
         return <ApiKeyComponent handleApiKeyClick={handleApiKeyClick} />;
       default:
-        return <DashboardHome api_key="*" />;
+        return <ApiKeyComponent handleApiKeyClick={handleApiKeyClick} />;
     }
   };
 

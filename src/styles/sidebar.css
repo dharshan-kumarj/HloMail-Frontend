@@ -4,7 +4,7 @@
   width: 250px;
   height: 100%;
   transition: transform 0.3s ease;
-  z-index: 100; /* Higher z-index to appear on top */
+  z-index: 2; /* Higher z-index to appear on top */
 }
 .left-sidebar {
   transform: translateX(-100%);
@@ -15,7 +15,9 @@
 }
 
 .right-sidebar {
+  
   right: 0;
+  top: 20% !important;
   transform: translateX(100%);
 }
 
@@ -24,18 +26,15 @@
 }
 
 .toggle-btn {
-  position: fixed;
   top: 20px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1000 !important;
 }
 
 .toggle-left {
-  z-index: 1000;
   left: 10px;
 }
 
 .toggle-right {
-  z-index: 1000;
   right: 10px;
 }
