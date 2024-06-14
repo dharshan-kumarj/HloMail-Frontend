@@ -1,4 +1,3 @@
-import { BarController } from "chart.js";
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import 'bootstrap/dist/css/bootstrap.min.css';

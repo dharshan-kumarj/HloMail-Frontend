@@ -28,7 +28,7 @@ const EditApiPopUp: React.FC<EditApiPopUpProps> = ({
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header closeButton onHide={onHide}>
         <Modal.Title className="fs-3">Change Name</Modal.Title>
       </Modal.Header>
       <Modal.Body>
