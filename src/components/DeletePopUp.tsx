@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/GenerateApiPopUP.css";
+import "../styles/DeleteApiPopUp.css";
 
-interface GenerateApiPopUpProps {
+interface DeleteApiPopUpProps {
   show: boolean;
   onHide: () => void;
   onSubmit: () => void;
 }
 
-const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
+const DeleteApiPopUp: React.FC<DeleteApiPopUpProps> = ({
   show,
   onHide,
   onSubmit,
@@ -27,6 +27,7 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className="delete-api-modal"
     >
       <Modal.Header closeButton>
         <Modal.Title
@@ -37,7 +38,7 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={handleSubmit} style={{ backgroundColor: "#EEEDF3" }}>
+        <form onSubmit={handleSubmit}>
           <div className="text-center mb-4">
             Are you sure you want to delete API key? This action cannot be
             undone.
@@ -45,12 +46,7 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
           <div className="d-flex justify-content-center">
             <button
               type="submit"
-              className="btn btn-danger submit"
-              style={{
-                backgroundColor: "#D42D2D",
-                padding: "0.5rem 12rem",
-                fontSize: "1rem",
-              }}
+              className="btn btn-danger delete-button"
             >
               Delete key
             </button>
@@ -61,4 +57,4 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
   );
 };
 
-export default GenerateApiPopUp;
+export default DeleteApiPopUp;

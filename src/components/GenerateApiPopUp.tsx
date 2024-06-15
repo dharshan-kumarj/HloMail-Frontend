@@ -15,11 +15,11 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
   onSubmit,
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [selectValue, setSelectValue] = useState("contact"); // Default select option
+  const [selectValue, setSelectValue] = useState("contact");
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit([selectValue, inputValue]); // Return an array with input value and selected option
+    onSubmit([selectValue, inputValue]);
     onHide();
   };
 
@@ -30,6 +30,7 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className="generate-api-modal"
     >
       <Modal.Header closeButton>
         <Modal.Title
@@ -39,12 +40,9 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
           Create Key
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ backgroundColor: "#EEEDF3" }}>
-        <form onSubmit={handleSubmit} >
+      <Modal.Body>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            {/* <label htmlFor="inputValue h2 text-center" className="form-label">
-            Name your API key
-            </label> */}
             <input
               type="text"
               className="form-control"
@@ -71,7 +69,6 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
           <button
             type="submit"
             className="btn btn-primary submit"
-            style={{ backgroundColor: "#aa14f0" }}
           >
             Generate key
           </button>

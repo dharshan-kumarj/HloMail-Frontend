@@ -6,7 +6,6 @@ import DeletePopUp from "./DeletePopUp";
 import edit_icon from "../images/dashboard/edit-icon.svg";
 import delete_icon from "../images/dashboard/delete-icon.svg";
 import copy_icon from "../images/dashboard/copy-icon.svg";
-import CopyApiPopUp from "./CopyPopUp";
 
 interface DashboardApiKeys {
   handleApiKeyClick: (component: string) => void;
@@ -25,6 +24,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
   const [copyApiModalShow, setCopyApiModalShow] = useState(false);
   const [selectedApiKey, setSelectedApiKey] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
+  const [copyMessage, setCopyMessage] = useState("");
 
   const fetchApiKeyData = () => {
     const headers = {
@@ -147,26 +147,41 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
   };
 
   const handleCopyToClipboard = (apiKey: string) => {
-    setSelectedApiKey(apiKey);
-    setCopyApiModalShow(true);
-  };
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(selectedApiKey).then(
+    navigator.clipboard.writeText(apiKey).then(
       () => {
-        setCopySuccess(true);
-        setTimeout(() => {
-          setCopySuccess(false);
-        }, 2000); // Reset the copySuccess state after 2 seconds
+        setCopyMessage("API key copied successfully");
+        setTimeout(() => setCopyMessage(""), 2000); // Clear message after 2 seconds
       },
       (err) => {
         console.error("Could not copy text: ", err);
+        setCopyMessage("Failed to copy API key");
+        setTimeout(() => setCopyMessage(""), 2000);
       }
     );
   };
 
+  function copyToClipboard(): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div className="main-content">
+        {copyMessage && (
+            <div 
+              style={{
+                position: 'fixed',
+                top: '20px',
+                right: '20px',
+                backgroundColor: '#4CAF50',
+                color: 'white',
+                padding: '15px',
+                borderRadius: '5px',
+                zIndex: 1000
+              }}
+            >
+              {copyMessage}
+            </div>
+        )}
       <div className="container mt-5">
         <h1 className="">API Keys</h1>
         <p className="">
@@ -202,12 +217,6 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
           show={generateApiModalShow}
           onHide={() => setGenerateApiModalShow(false)}
           onSubmit={handleGeneratePopUpSubmit}
-        />
-        <CopyApiPopUp
-          show={copyApiModalShow}
-          onHide={() => setCopyApiModalShow(false)}
-          onSubmit={copyToClipboard}
-          copySuccess={copySuccess}
         />
         {loading ? (
           <p>Loading...</p>

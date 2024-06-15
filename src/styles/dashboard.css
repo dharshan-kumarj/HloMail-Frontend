@@ -1,6 +1,7 @@
 body {
   min-height: 100vh;
 }
+
 .main-content {
   margin: 0 auto;
   padding: 20px;
@@ -13,28 +14,45 @@ body {
   }
 }
 
-.bg-lite-purple{
-  background-color: #EED9FA;
+.bg-lite-purple {
+  background-color: #EED9FA !important;
 }
 
 .action-icon {
-  width: 20px;
-  height: 20px;
+  width: 24px;  /* Default size for all devices */
+  height: 24px;
   cursor: pointer;
   transition: transform 0.2s;
+  padding: 4px;  /* Reduced padding */
+  margin: 0 4px;  /* Added margin for spacing */
 }
+
 .action-icon:hover {
   transform: scale(1.1);
 }
-@media (max-width: 768px) {
+
+/* Adjustments for larger screens */
+@media (min-width: 769px) {
   .action-icon {
-    width: 18px;
-    height: 18px;
+    width: 32px;
+    height: 32px;
   }
 }
-@media (max-width: 576px) {
+
+/* Adjustments for desktop */
+@media (min-width: 992px) {
   .action-icon {
-    width: 16px;
-    height: 16px;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+  }
+}
+
+/* Ensure icons are visible on very small screens */
+@media (max-width: 320px) {
+  .action-icon {
+    width: 20px;
+    height: 20px;
+    padding: 2px;
   }
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import "../styles/EditApiPopUp.css";
 
 interface EditApiPopUpProps {
   show: boolean;
@@ -14,7 +15,7 @@ const EditApiPopUp: React.FC<EditApiPopUpProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     onSubmit(inputValue);
     onHide();
@@ -27,34 +28,24 @@ const EditApiPopUp: React.FC<EditApiPopUpProps> = ({
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      className="edit-api-modal"
     >
       <Modal.Header closeButton onHide={onHide}>
         <Modal.Title className="fs-3">Change Name</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={handleSubmit} style={{ backgroundColor: '#EEEDF3' }}>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            {/* <label htmlFor="inputValue" className="form-label">
-              Enter a value:
-            </label> */}
             <input
               type="text"
               className="form-control"
-              placeholder="Edit API key’s name"
+              placeholder="Edit API key's name"
               id="inputValue"
               value={inputValue}
               onChange={(event) => setInputValue(event.target.value)}
             />
           </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            style={{
-              backgroundColor: '#00B707',
-              padding: '0.5rem 13.3rem',
-              fontSize: '0.9rem',
-            }}
-          >
+          <button type="submit" className="btn btn-primary save-button">
             Save
           </button>
         </form>

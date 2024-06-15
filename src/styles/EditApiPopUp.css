@@ -1,0 +1,67 @@
+.edit-api-modal .modal-dialog {
+    max-width: 90%;
+    margin: 1.75rem auto;
+  }
+  
+  .edit-api-modal .modal-content {
+    border-radius: 0.5rem;
+  }
+  
+  .edit-api-modal .modal-header {
+    border-bottom: none;
+    padding: 1.5rem 1.5rem 0.5rem;
+  }
+  
+  .edit-api-modal .modal-body {
+    background-color: #EEEDF3;
+    padding: 1.5rem;
+  }
+  
+  .edit-api-modal .modal-title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  
+  .edit-api-modal .form-control {
+    margin-bottom: 1rem;
+  }
+  
+  .edit-api-modal .save-button {
+    background-color: #00B707;
+    border: none;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  
+  @media (min-width: 576px) {
+    .edit-api-modal .modal-dialog {
+      max-width: 500px;
+    }
+  
+    .edit-api-modal .modal-title {
+      font-size: 1.75rem;
+    }
+  
+    .edit-api-modal .save-button {
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .edit-api-modal .modal-dialog {
+      max-width: 600px;
+    }
+  
+    .edit-api-modal .modal-body {
+      padding: 2rem;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .edit-api-modal .modal-dialog {
+      max-width: 700px;
+    }
+  }
