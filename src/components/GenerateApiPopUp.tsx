@@ -39,8 +39,8 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
           Create Key
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <form onSubmit={handleSubmit} style={{ backgroundColor: "#EEEDF3" }}>
+      <Modal.Body style={{ backgroundColor: "#EEEDF3" }}>
+        <form onSubmit={handleSubmit} >
           <div className="mb-3">
             {/* <label htmlFor="inputValue h2 text-center" className="form-label">
             Name your API key

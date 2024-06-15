@@ -5,6 +5,7 @@ import GenerateApiPopUp from "./GenerateApiPopUp";
 import DeletePopUp from "./DeletePopUp";
 import edit_icon from "../images/dashboard/edit-icon.svg";
 import delete_icon from "../images/dashboard/delete-icon.svg";
+import copy_icon from "../images/dashboard/copy-icon.svg";
 
 interface DashboardApiKeys {
   handleApiKeyClick: (component: string) => void;
@@ -79,6 +80,15 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
     }
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      // Optionally, you can show a temporary message to indicate successful copying
+      alert("API Key copied to clipboard!");
+    }, (err) => {
+      console.error('Could not copy text: ', err);
+    });
+  };
+
   const handleDeletePopUpSubmit = async () => {
     console.log(selectedApiKey);
     console.log(action);
@@ -147,6 +157,20 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
       <div className="container mt-5">
         <h1 className="text-center mb-4">API Keys</h1>
         <p className="text-center">List of API keys</p>
+        <button
+          className="btn btn-primary btn-sm me-2 "
+          style={{
+                backgroundColor: "#aa14f0",
+                padding: "0.5rem 2rem",
+                fontSize: "1rem",
+                }}
+          onClick={() => {
+          setGenerateApiModalShow(true);
+          setAction("generate-apikey");
+          }}
+                  >
+          Generate key
+        </button>
 
         <EditApiPopUp
           show={editApiModalShow}
@@ -166,8 +190,8 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <div className="table-responsive">
-            <table className="table table-striped table-bordered table-hover">
+          <div className="table-responsive pt-3">
+            <table className="table table-striped pt-2 table-bordered table-hover">
               <thead>
                 <tr>
                   <th>Title</th>
@@ -185,51 +209,43 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
                       {item["api_key"]}
                     </td>
                     <td>{item["type"]}</td>
-                    <td>
-                      <div className="row">
-                        {" "}
-                        <div className="col">
-                          <img
-                            src={edit_icon}
-                            className="btn me-2"
-                            onClick={() => {
-                              setEditApiModalShow(true);
-                              setSelectedApiKey(item["api_key"]);
-                              setAction("edit-apikey");
-                            }}
-                          />
+                      <td>
+                        <div className="row">
+                          <div className="col">
+                            <img
+                              src={edit_icon}
+                              className="btn me-2"
+                              onClick={() => {
+                                setEditApiModalShow(true);
+                                setSelectedApiKey(item["api_key"]);
+                                setAction("edit-apikey");
+                              }}
+                            />
+                          </div>
+                          <div className="col">
+                            <img
+                              className=""
+                              src={delete_icon}
+                              onClick={() => {
+                                setDeleteApiModalShow(true);
+                                setSelectedApiKey(item["api_key"]);
+                                setAction("delete-apikey");
+                              }}
+                            />
+                          </div>
+                          <div className="col">
+                            <img
+                              src={copy_icon}
+                              className="btn me-2"
+                              onClick={() => copyToClipboard(item["api_key"])}
+                            />
+                          </div>
                         </div>
-                        <div className="col">
-                          <img
-                            className=""
-                            src={delete_icon}
-                            onClick={() => {
-                              setDeleteApiModalShow(true);
-                              setSelectedApiKey(item["api_key"]);
-                              setAction("delete-apikey");
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </td>
+                      </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <button
-              className="btn btn-primary btn-sm me-2 "
-              style={{
-                backgroundColor: "#aa14f0",
-                padding: "0.5rem 2rem",
-                fontSize: "1rem",
-              }}
-              onClick={() => {
-                setGenerateApiModalShow(true);
-                setAction("generate-apikey");
-              }}
-            >
-              Generate key
-            </button>
           </div>
         )}
       </div>
