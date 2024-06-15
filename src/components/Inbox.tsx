@@ -160,15 +160,15 @@ const Inbox: React.FC = () => {
               </ul>
             ) : (
               <div className="message-details mt-3">
-                <button
-                  className="btn btn-secondary mb-3"
+                <img
+                  className="btn p-0"
                   onClick={handleBackButtonClick}
-                >
-                  Back
-                </button>
+                  src="https://img.icons8.com/metro/26/back.png"
+                />
+                 
                 {selectedMessage && (
                   <>
-                    <h5>{selectedMessage.title}</h5>
+                    <h5 className="pt-3">{selectedMessage.title}</h5>
                     <p>{selectedMessage.message}</p>
                   </>
                 )}

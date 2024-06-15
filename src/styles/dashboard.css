@@ -16,3 +16,25 @@ body {
 .bg-lite-purple{
   background-color: #EED9FA;
 }
+
+.action-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.action-icon:hover {
+  transform: scale(1.1);
+}
+@media (max-width: 768px) {
+  .action-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+@media (max-width: 576px) {
+  .action-icon {
+    width: 16px;
+    height: 16px;
+  }
+}

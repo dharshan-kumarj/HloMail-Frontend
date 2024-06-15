@@ -16,6 +16,7 @@ interface LeftSidebarProps {
 
 const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
   const [isLeftSidebarVisible, setIsLeftSidebarVisible] = useState(false);
+  const [active, setActive] = useState("api-keys");
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,77 +60,135 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
           isLeftSidebarVisible ? "show" : ""
         }`}
       >
-        <div className="card shadow bg-white rounded-lg">
+        <div
+          className="card shadow bg-white rounded-lg"
+          style={{ height: "90vh" }}
+        >
           <img src={img_logo} alt="" />
-          <div className="d-flex flex-column" style={{ height: "65vh" }}>
+          <div className="d-flex flex-column" style={{ height: "100vh" }}>
             <ul className="nav flex-column">
-              <li className="nav-item mt-3">
-                <span className="nav-link active">
+              <li className="nav-item mt-3 ">
+                <span
+                  className={
+                    active == "Dashboard"
+                      ? "bg-lite-purple rounded side-bar-a"
+                      : " rounded "
+                  }
+                >
                   <img src={dashboard_icon} />
                   <a
-                    className="ps-2 text-dark"
+                    style={{ textDecoration: "none", color: "black" }}
+                    className="ps-2 text-dark "
                     href="#"
-                    onClick={() => setSelectedComponent("Dashboard")}
+                    onClick={() => {
+                      setSelectedComponent("Dashboard"), setActive("Dashboard");
+                    }}
                   >
                     Dashboard
                   </a>
                 </span>
               </li>
               <li className="nav-item mt-3">
-                <span className="nav-link">
+                <span
+                  className={
+                    active == "API Key"
+                      ? "bg-lite-purple rounded "
+                      : " rounded "
+                  }
+                >
                   <img src={api_icon} />
                   <a
+                    style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => setSelectedComponent("API Key")}
+                    onClick={() => {
+                      setSelectedComponent("API Key"), setActive("API Key");
+                    }}
                   >
                     API Key
                   </a>
                 </span>
               </li>
               <li className="nav-item mt-3">
-                <span className="nav-link">
+                <span
+                  className={
+                    active == "Credits"
+                      ? "bg-lite-purple rounded "
+                      : " rounded "
+                  }
+                >
                   <img src={creadits_icon} />
                   <a
+                    style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => setSelectedComponent("Credits")}
+                    onClick={() => {
+                      setSelectedComponent("Credits"), setActive("Credits");
+                    }}
                   >
                     Credits
                   </a>
                 </span>
               </li>
               <li className="nav-item mt-3">
-                <span className="nav-link">
+                <span
+                  className={
+                    active == "Templates"
+                      ? "bg-lite-purple rounded "
+                      : " rounded "
+                  }
+                >
                   <img src={templates_icon} />
                   <a
+                    style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => setSelectedComponent("Templates")}
+                    onClick={() => {
+                      setSelectedComponent("Templates"), setActive("Templates");
+                    }}
                   >
                     Templates
                   </a>
                 </span>
               </li>
               <li className="nav-item mt-3">
-                <span className="nav-link">
+                <span
+                  className={
+                    active == "Documentation"
+                      ? "bg-lite-purple rounded "
+                      : " rounded "
+                  }
+                >
                   <img src={documentation_icon} />
                   <a
+                    style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => setSelectedComponent("Documentation")}
+                    onClick={() => {
+                      setSelectedComponent("Documentation"),
+                        setActive("Documentation");
+                    }}
                   >
                     Documentation
                   </a>
                 </span>
               </li>
               <li className="nav-item mt-3">
-                <span className="nav-link">
+                <span
+                  className={
+                    active == "Support"
+                      ? "bg-lite-purple rounded "
+                      : " rounded "
+                  }
+                >
                   <img src={support_icon} />
                   <a
+                    style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => setSelectedComponent("Support")}
+                    onClick={() => {
+                      setSelectedComponent("Support"), setActive("Support");
+                    }}
                   >
                     Support
                   </a>

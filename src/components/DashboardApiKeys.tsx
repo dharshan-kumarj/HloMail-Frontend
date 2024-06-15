@@ -6,6 +6,7 @@ import DeletePopUp from "./DeletePopUp";
 import edit_icon from "../images/dashboard/edit-icon.svg";
 import delete_icon from "../images/dashboard/delete-icon.svg";
 import copy_icon from "../images/dashboard/copy-icon.svg";
+import CopyApiPopUp from "./CopyPopUp";
 
 interface DashboardApiKeys {
   handleApiKeyClick: (component: string) => void;
@@ -19,9 +20,11 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
   const [generateApiModalShow, setGenerateApiModalShow] = React.useState(false);
   const [apiKeyData, setApiKeyData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedApiKey, setSelectedApiKey] = useState("");
   const [action, setAction] = useState("");
   const token = Cookies.get("token");
+  const [copyApiModalShow, setCopyApiModalShow] = useState(false);
+  const [selectedApiKey, setSelectedApiKey] = useState("");
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const fetchApiKeyData = () => {
     const headers = {
@@ -78,15 +81,6 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
     } catch (error) {
       console.error("API Error:", error);
     }
-  };
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      // Optionally, you can show a temporary message to indicate successful copying
-      alert("API Key copied to clipboard!");
-    }, (err) => {
-      console.error('Could not copy text: ', err);
-    });
   };
 
   const handleDeletePopUpSubmit = async () => {
@@ -152,23 +146,45 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
     setGenerateApiModalShow(false);
   };
 
+  const handleCopyToClipboard = (apiKey: string) => {
+    setSelectedApiKey(apiKey);
+    setCopyApiModalShow(true);
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(selectedApiKey).then(
+      () => {
+        setCopySuccess(true);
+        setTimeout(() => {
+          setCopySuccess(false);
+        }, 2000); // Reset the copySuccess state after 2 seconds
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+      }
+    );
+  };
+
   return (
     <div className="main-content">
       <div className="container mt-5">
-        <h1 className="text-center mb-4">API Keys</h1>
-        <p className="text-center">List of API keys</p>
+        <h1 className="">API Keys</h1>
+        <p className="">
+          Generate your API key now and unlock the full potential of our email
+          solutions.
+        </p>
         <button
           className="btn btn-primary btn-sm me-2 "
           style={{
-                backgroundColor: "#aa14f0",
-                padding: "0.5rem 2rem",
-                fontSize: "1rem",
-                }}
-          onClick={() => {
-          setGenerateApiModalShow(true);
-          setAction("generate-apikey");
+            backgroundColor: "#aa14f0",
+            padding: "0.5rem 2rem",
+            fontSize: "1rem",
           }}
-                  >
+          onClick={() => {
+            setGenerateApiModalShow(true);
+            setAction("generate-apikey");
+          }}
+        >
           Generate key
         </button>
 
@@ -187,6 +203,12 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
           onHide={() => setGenerateApiModalShow(false)}
           onSubmit={handleGeneratePopUpSubmit}
         />
+        <CopyApiPopUp
+          show={copyApiModalShow}
+          onHide={() => setCopyApiModalShow(false)}
+          onSubmit={copyToClipboard}
+          copySuccess={copySuccess}
+        />
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -194,54 +216,50 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
             <table className="table table-striped pt-2 table-bordered table-hover">
               <thead>
                 <tr>
-                  <th>Title</th>
-                  <th>API Key</th>
-                  <th>Type</th>
-
-                  <th>Actions</th>
+                  <th className="text-center">Name</th>
+                  <th className="text-center">API Key</th>
+                  <th className="text-center">Type</th>
+                  <th className="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {apiKeyData.map((item, index) => (
                   <tr key={index}>
-                    <td>{item["title"]}</td>
-                    <td onClick={() => handleApiKeyClick(item["api_key"])}>
+                    <td className="text-center">{item["title"]}</td>
+                    <td className="text-center" onClick={() => handleApiKeyClick(item["api_key"])}>
                       {item["api_key"]}
                     </td>
-                    <td>{item["type"]}</td>
-                      <td>
-                        <div className="row">
-                          <div className="col">
-                            <img
-                              src={edit_icon}
-                              className="btn me-2"
-                              onClick={() => {
-                                setEditApiModalShow(true);
-                                setSelectedApiKey(item["api_key"]);
-                                setAction("edit-apikey");
-                              }}
-                            />
-                          </div>
-                          <div className="col">
-                            <img
-                              className=""
-                              src={delete_icon}
-                              onClick={() => {
-                                setDeleteApiModalShow(true);
-                                setSelectedApiKey(item["api_key"]);
-                                setAction("delete-apikey");
-                              }}
-                            />
-                          </div>
-                          <div className="col">
-                            <img
-                              src={copy_icon}
-                              className="btn me-2"
-                              onClick={() => copyToClipboard(item["api_key"])}
-                            />
-                          </div>
-                        </div>
-                      </td>
+                    <td className="text-center">{item["type"]}</td>
+                    <td className="text-center">
+                      <div className="d-flex justify-content-center align-items-center">
+                        <img
+                          src={edit_icon}
+                          className="action-icon mx-1"
+                          onClick={() => {
+                            setEditApiModalShow(true);
+                            setSelectedApiKey(item["api_key"]);
+                            setAction("edit-apikey");
+                          }}
+                          alt="Edit"
+                        />
+                        <img
+                          src={delete_icon}
+                          className="action-icon mx-1"
+                          onClick={() => {
+                            setDeleteApiModalShow(true);
+                            setSelectedApiKey(item["api_key"]);
+                            setAction("delete-apikey");
+                          }}
+                          alt="Delete"
+                        />
+                        <img
+                          src={copy_icon}
+                          className="action-icon mx-1"
+                          onClick={() => handleCopyToClipboard(item["api_key"])}
+                          alt="Copy"
+                        />
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>

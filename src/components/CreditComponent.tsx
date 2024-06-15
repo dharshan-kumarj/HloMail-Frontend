@@ -11,11 +11,11 @@ const Credits = () => {
             <div className="input-group">
               <input
                 type="number"
-                className="form-control"
+                className="form-control rounded"
                 placeholder="Enter the amount of credits"
                 defaultValue={0}
               />
-              <div className="input-group-append">
+              <div className="input-group-append ps-3">
                 <button className="btn btn-primary">Pay</button>
               </div>
             </div>
@@ -26,7 +26,7 @@ const Credits = () => {
           <div className="col">
             <h3>Explore bundles</h3>
             <p>Save More with Bundles, Get Credits at Lower Prices.</p>
-            <div className="row">
+            <div className="container-fluid">
               <div className="row row-cols-1 row-cols-md-3 mb-3 text-center">
                 <div className="col">
                   <div className="card mb-4 rounded-3 shadow-sm">
@@ -47,7 +47,7 @@ const Credits = () => {
                         type="button"
                         className="w-100 btn btn-lg btn-outline-primary"
                       >
-                        Sign up for free
+                        Free plan
                       </button>
                     </div>
                   </div>
@@ -88,7 +88,7 @@ const Credits = () => {
                       <ul className="list-unstyled mt-3 mb-4">
                         <li>30 users included</li>
                         <li>15 GB of storage</li>
-                        <li>Phone and email support</li>
+                        <li>Phone  support</li>
                         <li>Help center access</li>
                       </ul>
                       <button
