@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import "../styles/EditApiPopUp.css";
+import "../styles/edit_api_popup.css";
 
 interface EditApiPopUpProps {
   show: boolean;

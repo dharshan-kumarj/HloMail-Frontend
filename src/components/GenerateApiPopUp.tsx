@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/GenerateApiPopUP.css";
+import "../styles/generate_api_popup.css";
 
 interface GenerateApiPopUpProps {
   show: boolean;
@@ -31,6 +31,7 @@ const GenerateApiPopUp: React.FC<GenerateApiPopUpProps> = ({
       aria-labelledby="contained-modal-title-vcenter"
       centered
       className="generate-api-modal"
+      
     >
       <Modal.Header closeButton>
         <Modal.Title

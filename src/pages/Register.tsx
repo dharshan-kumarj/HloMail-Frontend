@@ -1,264 +1,217 @@
-import React, { useState } from 'react';
-import Cookies from 'js-cookie';
+import React, { useState, useEffect } from "react";
+import "../styles/sidebar.css"; // Ensure you import necessary CSS for styling
+import Cookies from "js-cookie";
+import mail_logo from "../images/inbox/mail-logo.svg";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import { Container, Card, Col, Row, ListGroup, Image, Button } from "react-bootstrap"; // Import Bootstrap components
 
-function Register() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [otp, setOtp] = useState('');
-  const [showOtpInput, setShowOtpInput] = useState(false);
-  const [, setErrorMessage] = useState('');
+interface Message {
+  message_id: string;
+  title: string;
+  readed: boolean;
+}
 
-  const handleEmailChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setEmail(event.target.value);
+interface FullMessage {
+  _id: string;
+  title: string;
+  message: string;
+  readed: boolean;
+}
+
+const Inbox: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [selectedMessage, setSelectedMessage] = useState<FullMessage | null>(null);
+  const [isMessageView, setIsMessageView] = useState(false); // State to manage view mode
+  const [forceUpdate, setForceUpdate] = useState(false); // State for forcing component rerender
+  const [profileImage, setProfileImage] = useState<string>(""); // State to store profile image URL
+
+  const token = Cookies.get("token");
+
+  const handleToggleVisibility = () => {
+    setIsVisible(!isVisible);
   };
 
-  const handlePasswordChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setPassword(event.target.value);
+  const handleResize = () => {
+    if (window.innerWidth >= 992) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
   };
 
-  const handleUsernameChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setUsername(event.target.value);
-  };
-
-  const handleOtpChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setOtp(event.target.value);
-  };
-
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
-
-    const formData = {
-      email,
-      username,
-      password,
-    };
-
-    fetch('https://hlomail.sanjaysagar.com/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Server response:', data);
-        if (data.valid) {
-          alert('OTP has been sent to your email. Please enter the OTP to verify.');
-          setShowOtpInput(true); // Set showOtpInput to true
-        } else {
-          alert( data.error);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
+  const fetchProfileImage = async () => {
+    try {
+      const response = await fetch("https://hlomail.sanjaysagar.com/logo", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const imageData = await response.blob();
+      const imageUrl = URL.createObjectURL(imageData);
+      setProfileImage(imageUrl);
+    } catch (error) {
+      console.error("Error fetching profile image:", error);
+    }
   };
 
-  const handleVerify = () => {
-    fetch('https://hlomail.sanjaysagar.com/verify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, otp }),
-    })
-      .then((response) => response.json())
-      .then(async (data) => {
-        if (data.valid) {
-          // Verification successful, no need to send email and password for login
-          // Save the token in cookies
-          const data = { email, password };
-          console.log(data);
-
-          try {
-            const response = await fetch('https://hlomail.sanjaysagar.com/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
-            });
-      
-            const responseData = await response.json();
-      
-            if (response.ok) {
-              // Save the token in the cookies
-              Cookies.set('token', responseData.token);
-              // Redirect to the dashboard
-              window.location.href = 'https://hlomail-frontend.sanjaysagar.com/dashboard';
-            } else {
-              setErrorMessage(responseData.message || 'An error occurred during login');
-            }
-          } catch (error) {
-            console.error('Error:', error);
-            setErrorMessage('An error occurred. Please try again later.');
+  const fetchMessages = async () => {
+    try {
+      const response = await fetch("https://hlomail.sanjaysagar.com/inbox", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+  
+      if (data && data.valid) {
+        // Modify titles to add asterisk (*) for unread messages and truncate if longer than 10 characters
+        const modifiedMessages = data.inbox.map((msg: Message) => {
+          let modifiedTitle = msg.title.length > 10 ? msg.title.substring(0, 10) + "..." : msg.title;
+          if (!msg.readed) {
+            modifiedTitle = `${modifiedTitle}`;
           }
-
-          // Redirect to the dashboard
-          window.location.href = 'https://hlomail-frontend.sanjaysagar.com/dashboard';
-        } else {
-          alert('Wrong OTP. Please try again.');
+          return {
+            ...msg,
+            title: modifiedTitle,
+          };
+        });
+        setMessages(modifiedMessages);
+      } else {
+        throw new Error("Invalid response structure");
+      }
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+  
+  const fetchMessageById = async (message_id: string) => {
+    try {
+      const response = await fetch(
+        `https://hlomail.sanjaysagar.com/inbox-message/${message_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data && data.valid) {
+        setSelectedMessage(data.inbox);
+        setIsMessageView(true); // Switch to message view
+      } else {
+        throw new Error("Invalid response structure");
+      }
+    } catch (error) {
+      console.error("Error fetching message:", error);
+    }
   };
 
-  const handleResendOTP = () => {
-    const formData = {
-      email,
-      username,
-      password,
+  const handleBackButtonClick = () => {
+    setIsMessageView(false);
+    setSelectedMessage(null);
+    setForceUpdate((prev) => !prev); // Toggle forceUpdate to trigger rerender
+  };
+
+  useEffect(() => {
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    fetchMessages(); // Fetch messages on mount
+    fetchProfileImage(); // Fetch profile image on mount
+    return () => {
+      window.removeEventListener("resize", handleResize);
     };
-
-    fetch('http://localhost:8000/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.valid) {
-          alert('OTP has been sent to your email. Please enter the OTP to verify.');
-        } else {
-          alert('Error resending OTP. Please try again.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
-
+  }, [forceUpdate]); // Include forceUpdate in dependencies to rerender on state change
 
   return (
     <>
-    <main className="vh-100 d-flex flex-column" style={{ backgroundColor: "#FFFFFF" }}>
-      <div className="container-fluid p-3 p-md-5">
-        <div className="row justify-content-between align-items-center">
-          <div className="col-auto">
-            <div className="d-flex align-items-center mb-3">
-              <div className="col-12">
-                <h1 className="text-start" style={{ color: "#aa14f0" }}>
-                  HloMail
-                </h1>
-              </div>
-            </div>
-          </div>
-          <div className="col-auto d-flex align-items-center">
-            <button className="btn btn-outline-light me-3 mb-2 mb-md-0" style={{ backgroundColor: "#aa14f0", border: '1px solid #aa14f0' }}>
-              Back to Home
-            </button>
-            <button
-              className="btn btn-outline-light mb-2 mb-md-0"
-              style={{ color: "#aa14f0", border: "1px solid #aa14f0" }}
-              onClick={() => window.location.href = "https://hlomail-frontend.sanjaysagar.com/login"}
-            >
-              Login
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="container d-flex justify-content-center align-items-center flex-grow-1">
-        <div className="row justify-content-center w-100">
-          <div className="col-md-10 col-lg-8 col-xl-6">
-            <div
-              className="card mx-auto"
-              style={{
-                maxWidth: '800px',
-                width: '100%',
-                height: showOtpInput ? '700px' : '500px',
-                backgroundColor: "#FFFFFF",
-                borderRight: '7px solid #aa14f0',
-                borderBottom: '7px solid #aa14f0',
-                marginTop: '-150px'
-              }}
-            >
-              <div className="card-body d-flex flex-column justify-content-center align-items-center">
-                <h5 className="card-title text-center fs-1 mb-4" style={{ color: "#aa14f0" }}>Register</h5>
-                <h3 className='fs-6 text-dark' style={{ color: "#D9D9D9" }}>Create an new account</h3>
-                <form onSubmit={handleSubmit} className="w-100">
-                  <div className="form-group fs-5 p-3">
-                    <input
-                      type="email"
-                      className="form-control fs-6 form-control-lg"
-                      id="email"
-                      value={email}
-                      onChange={handleEmailChange}
-                      placeholder="Enter email"
-                      required
-                    />
-                  </div>
-                  <div className="form-group fs-5 p-3">
-                    <input
-                      type="text"
-                      className="form-control fs-6 form-control-lg"
-                      id="username"
-                      value={username}
-                      onChange={handleUsernameChange}
-                      placeholder="Username"
-                      required
-                    />
-                  </div>
-                  <div className="form-group fs-5 p-3">
-                    <input
-                      type="password"
-                      className="form-control fs-6 form-control-lg"
-                      id="password"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      placeholder="Password"
-                      required
-                    />
-                  </div>
-                  <div className="d-flex pt-3 d-grid gap-2 col-12 mx-auto justify-content-center">
-                    <button type="submit" className="btn text-white btn-lg form-control" style={{ backgroundColor: "#aa14f0" }}>
-                      Register
-                    </button>
-                  </div>
-                  {showOtpInput && (
-                    <div className="form-group fs-5 p-3">
-                      <label htmlFor="otp">Enter OTP:</label>
-                      <input
-                        type="text"
-                        className="form-control fs-6 form-control-lg"
-                        id="otp"
-                        value={otp}
-                        onChange={handleOtpChange}
-                        placeholder="Enter OTP"
-                      />
-                      <div className="d-flex pt-3 justify-content-center">
-                        <button
-                          type="button"
-                          className="btn btn-dark btn-lg me-3"
-                          style={{ backgroundColor: "#aa14f0", color: "black" }}
-                          onClick={handleVerify}
-                        >
-                          Verify
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-secondary btn-lg"
-                          onClick={handleResendOTP}
-                        >
-                          Resend OTP
-                        </button>
-                      </div>
-                    </div>
+      <span className="toggle-btn toggle-right">
+        {profileImage && (
+          <Image
+            width={26}
+            height={26}
+            style={{ zIndex: 12, right: 60 }}
+            className="position-fixed"
+            src={profileImage}
+            alt="Profile"
+            roundedCircle
+          />
+        )}
+      </span>
+      <span
+        className="toggle-btn toggle-right"
+        onClick={handleToggleVisibility}
+      >
+        <Image
+          width={26}
+          height={26}
+          style={{ zIndex: 12, right: 10 }}
+          className="position-fixed"
+          src={mail_logo}
+          alt="Mail Logo"
+          roundedCircle
+        />
+      </span>
+      <div
+        className={`sidebar right-sidebar ${isVisible ? "show" : ""}`}
+        style={{ top: "10px" }}
+      >
+        <Container>
+          <Card className="shadow bg-white rounded-lg">
+            <Card.Body className="ps-3 mt-3" style={{ maxHeight: "65vh", overflowY: "auto", overflowX: "hidden" }}>
+              <Row className="mb-3">
+                <Col xs={2}>
+                  <Image src={mail_logo} height={30} width={30} alt="logo" roundedCircle />
+                </Col>
+                <Col>
+                  <h2>Inbox</h2>
+                </Col>
+              </Row>
+
+              {!isMessageView ? (
+                <ListGroup className="flex-column message-list">
+                  {messages.map((msg) => (
+                    <ListGroup.Item key={msg.message_id} action onClick={() => fetchMessageById(msg.message_id)} className={`d-flex justify-content-between align-items-center ${!msg.readed ? 'font-weight-bold' : ''}`}>
+                      {msg.title}
+                      {!msg.readed && <span className="badge bg-primary rounded-pill">2</span>}
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              ) : (
+                <div className="message-details mt-3">
+                  <Button variant="link" onClick={handleBackButtonClick} className="btn p-0">
+                    <Image src="https://img.icons8.com/metro/26/back.png" alt="Back" />
+                  </Button>
+                  {selectedMessage && (
+                    <>
+                      <h5 className="pt-3">{selectedMessage.title}</h5>
+                      <p>{selectedMessage.message}</p>
+                    </>
                   )}
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+                </div>
+              )}
+            </Card.Body>
+          </Card>
+        </Container>
       </div>
-    </main>
     </>
   );
-}
+};
 
-export default Register;
+export default Inbox;

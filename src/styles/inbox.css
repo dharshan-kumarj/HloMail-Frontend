@@ -1,0 +1,22 @@
+.message-list .nav-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.message-list .badge {
+  background-color: #6c63ff; /* Customize badge color */
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+.message-list .list-group-item {
+  border: none;
+  border-bottom: 1px solid #dee2e6; /* Adjust the color to your preference */
+}
+
+.message-list .list-group-item:last-child {
+  border-bottom: none; /* Remove the border for the last item */
+}
+

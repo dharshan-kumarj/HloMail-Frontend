@@ -35,7 +35,8 @@ const Login = () => {
 
       if (response.ok) {
         // Save the token in the cookies
-        Cookies.set("token", responseData.token);
+        Cookies.set("token", responseData.token, { expires: 7, domain: "hlomail-frontend.sanjaysagar.com", secure: true });
+        
         alert(responseData.token)
         // Redirect to the dashboard
         window.location.href =

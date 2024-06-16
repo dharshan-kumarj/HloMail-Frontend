@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 import "../styles/sidebar.css"; // Ensure you import necessary CSS for styling
 import Cookies from "js-cookie";
 import mail_logo from "../images/inbox/mail-logo.svg";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "../styles/inbox.css"
+import {
+  Container,
+  Card,
+  Col,
+  Row,
+  ListGroup,
+  Image,
+  Button,
+} from "react-bootstrap"; // Import Bootstrap components
 
 interface Message {
   message_id: string;
@@ -75,11 +86,20 @@ const Inbox: React.FC = () => {
       const data = await response.json();
 
       if (data && data.valid) {
-        // Modify titles to add dot if readed is false
-        const modifiedMessages = data.inbox.map((msg: Message) => ({
-          ...msg,
-          title: msg.readed ? msg.title : `* ${msg.title} `,
-        }));
+        // Modify titles to add asterisk (*) for unread messages and truncate if longer than 10 characters
+        const modifiedMessages = data.inbox.map((msg: Message) => {
+          let modifiedTitle =
+            msg.title.length > 18
+              ? msg.title.substring(0, 18) + "..."
+              : msg.title;
+          if (!msg.readed) {
+            modifiedTitle = `${modifiedTitle}`;
+          }
+          return {
+            ...msg,
+            title: modifiedTitle,
+          };
+        });
         setMessages(modifiedMessages);
       } else {
         throw new Error("Invalid response structure");
@@ -137,13 +157,14 @@ const Inbox: React.FC = () => {
     <>
       <span className="toggle-btn toggle-right">
         {profileImage && (
-          <img
-            width="26"
-            height="26"
+          <Image
+            width={26}
+            height={26}
             style={{ zIndex: 12, right: 60 }}
             className="position-fixed"
             src={profileImage}
-            alt="toggle"
+            alt="Profile"
+            roundedCircle
           />
         )}
       </span>
@@ -151,62 +172,76 @@ const Inbox: React.FC = () => {
         className="toggle-btn toggle-right"
         onClick={handleToggleVisibility}
       >
-        <img
-          width="26"
-          height="26"
+        <Image
+          width={26}
+          height={26}
           style={{ zIndex: 12, right: 10 }}
           className="position-fixed"
           src={mail_logo}
-          alt="toggle"
+          alt="Mail Logo"
+          roundedCircle
         />
       </span>
       <div
         className={`sidebar right-sidebar ${isVisible ? "show" : ""}`}
         style={{ top: "10px" }}
       >
-        <div className="container">
-          <div className="card shadow bg-white rounded-lg">
-            <div
-              className="d-flex flex-column ps-3 mt-3"
+        <Container>
+          <Card className="shadow bg-white rounded-lg">
+            <Card.Body
+              className="ps-3 mt-3"
               style={{
-                maxHeight: "65vh",
                 minHeight: "65vh",
+                maxHeight: "65vh",
                 overflowY: "auto",
-              }} // Adjusted styles for message container
+                overflowX: "hidden",
+              }}
             >
-              <span>
-                <div className="row">
-                  <div className="col-2">
-                    <img src={mail_logo} height={30} width={30} alt="logo" />
-                  </div>
-                  <div className="col">
-                    <h2>Inbox</h2>
-                  </div>
-                </div>
-              </span>
+              <Row className="mb-3">
+                <Col xs={2}>
+                  <Image
+                    src={mail_logo}
+                    height={30}
+                    width={30}
+                    alt="logo"
+                    roundedCircle
+                  />
+                </Col>
+                <Col>
+                  <h2>Inbox</h2>
+                </Col>
+              </Row>
 
               {!isMessageView ? (
-                <ul className="nav flex-column message-list">
+                <ListGroup className="flex-column message-list">
                   {messages.map((msg) => (
-                    <li className="nav-item mt-3" key={msg.message_id}>
-                      <a
-                        className="nav-link"
-                        href="#"
-                        onClick={() => fetchMessageById(msg.message_id)}
-                      >
-                        {msg.title}
-                      </a>
-                    </li>
+                    <ListGroup.Item
+                      key={msg.message_id}
+                      action
+                      onClick={() => fetchMessageById(msg.message_id)}
+                      className={`d-flex justify-content-between align-items-center ${
+                        !msg.readed ? "font-weight-bold" : ""
+                      }`}
+                    >
+                      {msg.title}
+                      {!msg.readed && (
+                        <span className="badge bg-primary rounded-pill">1</span>
+                      )}
+                    </ListGroup.Item>
                   ))}
-                </ul>
+                </ListGroup>
               ) : (
                 <div className="message-details mt-3">
-                  <img
-                    className="btn p-0"
+                  <Button
+                    variant="link"
                     onClick={handleBackButtonClick}
-                    src="https://img.icons8.com/metro/26/back.png"
-                    alt="back"
-                  />
+                    className="btn p-0"
+                  >
+                    <Image
+                      src="https://img.icons8.com/metro/26/back.png"
+                      alt="Back"
+                    />
+                  </Button>
                   {selectedMessage && (
                     <>
                       <h5 className="pt-3">{selectedMessage.title}</h5>
@@ -215,9 +250,9 @@ const Inbox: React.FC = () => {
                   )}
                 </div>
               )}
-            </div>
-          </div>
-        </div>
+            </Card.Body>
+          </Card>
+        </Container>
       </div>
     </>
   );

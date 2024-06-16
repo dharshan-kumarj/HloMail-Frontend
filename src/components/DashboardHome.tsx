@@ -150,7 +150,26 @@ const DashboardHome = ({ api_key }: Props) => {
   ): Record<string, number> => {
     const labels = Object.keys(data);
     const values = Object.values(data);
+    var week_data = {
+      Monday: 0,
+      Tuesday: 0,
+      Wednesday: 0,
+      Thursday: 0,
+      Friday: 0,
+      Saturday: 0,
+      Sunday: 0,
+    };
+    if (timePeriod == "week") {
+      // Iterate over keys in data
+      for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+          // Assign the value from data[key] to week_data[key]
+          week_data[key] = data[key]; 
+        }
+      }
 
+      return week_data;
+    }
     if (labels.length >= 7) {
       return data;
     }
@@ -190,7 +209,6 @@ const DashboardHome = ({ api_key }: Props) => {
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div>
               <span>
-
                 <h1>Dashboard</h1>
               </span>
               <p>
@@ -203,18 +221,16 @@ const DashboardHome = ({ api_key }: Props) => {
             <div className="col-md-6">
               <div className="card shadow bg-white rounded">
                 <div className="card-body">
-                  <h5 className="card-title">Credits</h5>
-                  <p className="card-text">{credit}</p>
+                  <h5 className="card-title">{credit}</h5>
+                  <p className="card-text">Credits</p>
                 </div>
               </div>
             </div>
             <div className="col-md-6 mt-3 mt-md-0">
               <div className="card shadow bg-white rounded">
                 <div className="card-body">
-                  <h5 className="card-title">Interactions</h5>
-                  <p className="card-text">
-                    {todayIntraction} Interactions today
-                  </p>
+                  <h5 className="card-title">{todayIntraction}</h5>
+                  <p className="card-text">Interactions</p>
                 </div>
               </div>
             </div>
@@ -232,6 +248,9 @@ const DashboardHome = ({ api_key }: Props) => {
                     value={selectedApiKey}
                     onChange={handleApiKeyChange}
                   >
+                    <option key="overall" value="*">
+                      overall
+                    </option>
                     {apiKeys.map((apiKeyData) => (
                       <option
                         key={apiKeyData.api_key}

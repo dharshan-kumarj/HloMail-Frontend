@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/DeleteApiPopUp.css";
+import "../styles/delete_api_popup.css";
 
 interface DeleteApiPopUpProps {
   show: boolean;
