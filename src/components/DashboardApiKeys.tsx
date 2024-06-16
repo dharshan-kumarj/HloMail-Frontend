@@ -6,6 +6,8 @@ import DeletePopUp from "./DeletePopUp";
 import edit_icon from "../images/dashboard/edit-icon.svg";
 import delete_icon from "../images/dashboard/delete-icon.svg";
 import copy_icon from "../images/dashboard/copy-icon.svg";
+import user_icon from "../images/dashboard/user-icon.svg";
+
 
 interface DashboardApiKeys {
   handleApiKeyClick: (component: string) => void;
@@ -165,7 +167,10 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
   }
 
   return (
-    <div className="main-content">
+    <div className="main-content pt-5">
+    {/* <div className="icon-container d-flex justify-content-end align-items-center p-3">
+      <img src={user_icon} alt="User" className="icon" />
+    </div> */}
         {copyMessage && (
             <div 
               style={{

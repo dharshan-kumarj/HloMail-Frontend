@@ -16,7 +16,7 @@ interface LeftSidebarProps {
 
 const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
   const [isLeftSidebarVisible, setIsLeftSidebarVisible] = useState(false);
-  const [active, setActive] = useState("api-keys");
+  const [active, setActive] = useState("API Key");
 
   useEffect(() => {
     const handleResize = () => {
@@ -71,8 +71,8 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                 <span
                   className={
                     active == "Dashboard"
-                      ? "bg-lite-purple rounded side-bar-a"
-                      : " rounded "
+                      ? "bg-lite-purple rounded nav-link"
+                      : " rounded nav-link"
                   }
                 >
                   <img src={dashboard_icon} />
@@ -92,8 +92,8 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                 <span
                   className={
                     active == "API Key"
-                      ? "bg-lite-purple rounded "
-                      : " rounded "
+                      ? "bg-lite-purple rounded nav-link"
+                      : " rounded nav-link"
                   }
                 >
                   <img src={api_icon} />
@@ -113,8 +113,8 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                 <span
                   className={
                     active == "Credits"
-                      ? "bg-lite-purple rounded "
-                      : " rounded "
+                      ? "bg-lite-purple rounded nav-link"
+                      : " rounded nav-link"
                   }
                 >
                   <img src={creadits_icon} />
@@ -134,8 +134,8 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                 <span
                   className={
                     active == "Templates"
-                      ? "bg-lite-purple rounded "
-                      : " rounded "
+                      ? "bg-lite-purple rounded nav-link"
+                      : " rounded nav-link"
                   }
                 >
                   <img src={templates_icon} />
@@ -155,8 +155,8 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                 <span
                   className={
                     active == "Documentation"
-                      ? "bg-lite-purple rounded "
-                      : " rounded "
+                      ? "bg-lite-purple rounded nav-link"
+                      : " rounded nav-link"
                   }
                 >
                   <img src={documentation_icon} />
@@ -177,8 +177,8 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                 <span
                   className={
                     active == "Support"
-                      ? "bg-lite-purple rounded "
-                      : " rounded "
+                      ? "bg-lite-purple rounded nav-link"
+                      : " rounded nav-link"
                   }
                 >
                   <img src={support_icon} />
