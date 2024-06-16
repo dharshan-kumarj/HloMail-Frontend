@@ -155,12 +155,13 @@ const Inbox: React.FC = () => {
 
   return (
     <>
-      <span className="toggle-btn toggle-right">
+      <span className="toggle-btn ">
         {profileImage && (
           <Image
-            width={26}
-            height={26}
-            style={{ zIndex: 12, right: 60 }}
+            width={35}
+            height={35}
+            
+            style={{ zIndex: 12, right: 20, top:"2%",border: '1px solid black'}}
             className="position-fixed"
             src={profileImage}
             alt="Profile"
@@ -173,13 +174,13 @@ const Inbox: React.FC = () => {
         onClick={handleToggleVisibility}
       >
         <Image
-          width={26}
-          height={26}
-          style={{ zIndex: 12, right: 10 }}
+          width={30}
+          height={30}
+          style={{ zIndex: 12, right: 70,top:"2%" }}
           className="position-fixed"
           src={mail_logo}
           alt="Mail Logo"
-          roundedCircle
+          
         />
       </span>
       <div
@@ -187,7 +188,7 @@ const Inbox: React.FC = () => {
         style={{ top: "10px" }}
       >
         <Container>
-          <Card className="shadow bg-white rounded-lg">
+          <Card className="shadow bg-white " style={{borderRadius:"25px"}}>
             <Card.Body
               className="ps-3 mt-3"
               style={{
@@ -197,14 +198,14 @@ const Inbox: React.FC = () => {
                 overflowX: "hidden",
               }}
             >
-              <Row className="mb-3">
+              <Row >
                 <Col xs={2}>
                   <Image
                     src={mail_logo}
                     height={30}
                     width={30}
                     alt="logo"
-                    roundedCircle
+                    
                   />
                 </Col>
                 <Col>
@@ -219,8 +220,8 @@ const Inbox: React.FC = () => {
                       key={msg.message_id}
                       action
                       onClick={() => fetchMessageById(msg.message_id)}
-                      className={`d-flex justify-content-between align-items-center ${
-                        !msg.readed ? "font-weight-bold" : ""
+                      className={`d-flex justify-content-between align-items-center mt-3 ${
+                        !msg.readed ? "font-weight-bold" : "font-weight-light"
                       }`}
                     >
                       {msg.title}

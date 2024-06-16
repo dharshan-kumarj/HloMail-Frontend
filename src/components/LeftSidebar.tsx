@@ -62,17 +62,22 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
       >
         <div
           className="card shadow bg-white rounded-lg"
-          style={{ height: "90vh" }}
+          style={{ height: "90vh", borderRadius: "25px" }}
         >
           <img src={img_logo} alt="" />
           <div className="d-flex flex-column" style={{ height: "100vh" }}>
             <ul className="nav flex-column">
-              <li className="nav-item mt-3 ">
+              <li
+                className="nav-item mt-3 "
+                onClick={() => {
+                  setSelectedComponent("Dashboard"), setActive("Dashboard");
+                }}
+              >
                 <span
                   className={
                     active == "Dashboard"
-                      ? "bg-lite-purple rounded nav-link"
-                      : " rounded nav-link"
+                      ? "bg-lite-purple mx-3 rounded nav-link"
+                      : " rounded nav-link mx-3"
                   }
                 >
                   <img src={dashboard_icon} />
@@ -80,20 +85,22 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                     style={{ textDecoration: "none", color: "black" }}
                     className="ps-2 text-dark "
                     href="#"
-                    onClick={() => {
-                      setSelectedComponent("Dashboard"), setActive("Dashboard");
-                    }}
                   >
                     Dashboard
                   </a>
                 </span>
               </li>
-              <li className="nav-item mt-3">
+              <li
+                className="nav-item mt-3"
+                onClick={() => {
+                  setSelectedComponent("API Key"), setActive("API Key");
+                }}
+              >
                 <span
                   className={
                     active == "API Key"
-                      ? "bg-lite-purple rounded nav-link"
-                      : " rounded nav-link"
+                      ? "bg-lite-purple rounded nav-link mx-3"
+                      : " rounded nav-link mx-3"
                   }
                 >
                   <img src={api_icon} />
@@ -101,20 +108,22 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                     style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => {
-                      setSelectedComponent("API Key"), setActive("API Key");
-                    }}
                   >
                     API Key
                   </a>
                 </span>
               </li>
-              <li className="nav-item mt-3">
+              <li
+                className="nav-item mt-3"
+                onClick={() => {
+                  setSelectedComponent("Credits"), setActive("Credits");
+                }}
+              >
                 <span
                   className={
                     active == "Credits"
-                      ? "bg-lite-purple rounded nav-link"
-                      : " rounded nav-link"
+                      ? "bg-lite-purple rounded nav-link mx-3"
+                      : " rounded nav-link mx-3"
                   }
                 >
                   <img src={creadits_icon} />
@@ -122,20 +131,22 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                     style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => {
-                      setSelectedComponent("Credits"), setActive("Credits");
-                    }}
                   >
                     Credits
                   </a>
                 </span>
               </li>
-              <li className="nav-item mt-3">
+              <li
+                className="nav-item mt-3"
+                onClick={() => {
+                  setSelectedComponent("Templates"), setActive("Templates");
+                }}
+              >
                 <span
                   className={
                     active == "Templates"
-                      ? "bg-lite-purple rounded nav-link"
-                      : " rounded nav-link"
+                      ? "bg-lite-purple rounded nav-link mx-3"
+                      : " rounded nav-link mx-3"
                   }
                 >
                   <img src={templates_icon} />
@@ -143,20 +154,23 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                     style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => {
-                      setSelectedComponent("Templates"), setActive("Templates");
-                    }}
                   >
                     Templates
                   </a>
                 </span>
               </li>
-              <li className="nav-item mt-3">
+              <li
+                className="nav-item mt-3"
+                onClick={() => {
+                  setSelectedComponent("Documentation"),
+                    setActive("Documentation");
+                }}
+              >
                 <span
                   className={
                     active == "Documentation"
-                      ? "bg-lite-purple rounded nav-link"
-                      : " rounded nav-link"
+                      ? "bg-lite-purple rounded nav-link mx-3"
+                      : " rounded nav-link mx-3"
                   }
                 >
                   <img src={documentation_icon} />
@@ -164,21 +178,22 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                     style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => {
-                      setSelectedComponent("Documentation"),
-                        setActive("Documentation");
-                    }}
                   >
                     Documentation
                   </a>
                 </span>
               </li>
-              <li className="nav-item mt-3">
+              <li
+                className="nav-item mt-3"
+                onClick={() => {
+                  setSelectedComponent("Support"), setActive("Support");
+                }}
+              >
                 <span
                   className={
                     active == "Support"
-                      ? "bg-lite-purple rounded nav-link"
-                      : " rounded nav-link"
+                      ? "bg-lite-purple rounded nav-link mx-3"
+                      : " rounded nav-link mx-3"
                   }
                 >
                   <img src={support_icon} />
@@ -186,9 +201,6 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                     style={{ textDecoration: "none", color: "black" }}
                     className="ps-2"
                     href="#"
-                    onClick={() => {
-                      setSelectedComponent("Support"), setActive("Support");
-                    }}
                   >
                     Support
                   </a>
@@ -197,7 +209,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
             </ul>
           </div>
           <div className="card-footer text-center">
-            <button type="button" className="btn btn-sm bg-lite-purple">
+            <button type="button" className="btn btn-sm bg-lite-purple px-4">
               Log out
             </button>
           </div>
