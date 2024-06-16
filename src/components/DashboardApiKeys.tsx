@@ -162,12 +162,9 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
     );
   };
 
-  function copyToClipboard(): void {
-    throw new Error("Function not implemented.");
-  }
 
   return (
-    <div className="main-content pt-5">
+    <div className="main-content">
     {/* <div className="icon-container d-flex justify-content-end align-items-center p-3">
       <img src={user_icon} alt="User" className="icon" />
     </div> */}
@@ -187,7 +184,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
               {copyMessage}
             </div>
         )}
-      <div className="container mt-5">
+      <div className="container">
         <h1 className="">API Keys</h1>
         <p className="">
           Generate your API key now and unlock the full potential of our email

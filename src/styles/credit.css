@@ -1,0 +1,55 @@
+.input-container {
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .input-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+  }
+  
+  .styled-input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 50px; /* Space for the suffix */
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .styled-input:focus {
+    border-color: #007bff;
+  }
+  
+  .input-suffix {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000;
+  }
+  
+  .pay-button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #d3d3d3;
+    color: #fff;
+  }
+  
+  .pay-button:not(:disabled) {
+    background-color: #007bff;
+    cursor: pointer;
+  }
+  
+  .input-container:focus-within .pay-button {
+    background-color: #007bff;
+    cursor: pointer;
+    color: #fff;
+  }
+  

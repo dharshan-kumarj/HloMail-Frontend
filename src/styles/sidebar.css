@@ -34,9 +34,7 @@
   left: 10px;
 }
 
-.toggle-right {
-  right: 10px;
-}
+
 
    /* Designing for scroll-bar */
    ::-webkit-scrollbar {

@@ -11,6 +11,9 @@
 .font-weight-bold {
   font-weight: bold;
 }
+.font-weight-light{
+  opacity: 0.5;
+}
 .message-list .list-group-item {
   border: none;
   border-bottom: 1px solid #dee2e6; /* Adjust the color to your preference */
