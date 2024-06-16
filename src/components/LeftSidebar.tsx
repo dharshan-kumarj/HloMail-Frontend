@@ -209,7 +209,7 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
             </ul>
           </div>
           <div className="card-footer text-center">
-            <button type="button" className="btn btn-sm bg-lite-purple px-4">
+            <button type="button" className="btn btn-sm bg-lite-purple px-4 button">
               Log out
             </button>
           </div>

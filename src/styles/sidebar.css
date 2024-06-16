@@ -63,3 +63,7 @@
   transform: translateX(0);
 }
 
+.button:hover {
+  background-color: #9b59b6 !important; /* Purple background color on hover */
+  color: #ffffff !important; /* White text color on hover */
+}
