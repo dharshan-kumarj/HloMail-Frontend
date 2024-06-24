@@ -2,15 +2,32 @@ import React, { useState } from 'react';
 
 const ForgotPass = () => {
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleEmailChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    // Handle form submission with the entered email
-    console.log('Submitted email:', email);
+    try {
+      const response = await fetch('https://api.hlomail.in/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setMessage('Password reset link sent successfully!');
+      } else {
+        const errorData = await response.json();
+        setMessage(errorData.message || 'Something went wrong, please try again.');
+      }
+    } catch (error) {
+      setMessage('An error occurred. Please try again later.');
+    }
   };
 
   return (
@@ -48,6 +65,15 @@ const ForgotPass = () => {
                   <h5 className="card-title text-center fs-1 mb-1" style={{ color: "#aa14f0" }}>
                     Reset Password
                   </h5>
+                  {message && (
+                    <div
+                      className="alert pt-2"
+                      style={{ backgroundColor: "#aa14f0" }}
+                      role="alert"
+                    >
+                      {message}
+                    </div>
+                  )}
                   <h3 className='fs-6 text-dark mb-4' style={{ color: "#D9D9D9" }}> Change your password</h3>
                   <form className="w-100" onSubmit={handleSubmit}>
                     <div className="mb-3">

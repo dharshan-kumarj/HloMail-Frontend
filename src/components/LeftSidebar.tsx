@@ -9,6 +9,7 @@ import creadits_icon from "../images/sidebar/creadits-icon.svg";
 import documentation_icon from "../images/sidebar/documentation-icon.svg";
 import support_icon from "../images/sidebar/support-icon.svg";
 import "../styles/dashboard.css";
+import Cookies from "js-cookie";
 
 interface LeftSidebarProps {
   setSelectedComponent: (component: string) => void;
@@ -37,6 +38,14 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
 
   const toggleSidebar = () => {
     setIsLeftSidebarVisible(!isLeftSidebarVisible);
+  };
+  const handleLogout = () => {
+    Cookies.remove("token", {
+      domain: "dashboard.hlomail.in",
+      secure: true,
+    });
+
+    window.location.href = "https://dashboard.hlomail.in/login";
   };
 
   return (
@@ -140,6 +149,9 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                 className="nav-item mt-3"
                 onClick={() => {
                   setSelectedComponent("Templates"), setActive("Templates");
+
+                  window.location.href =
+                    "https://hlomail.in/pages/templates.html";
                 }}
               >
                 <span
@@ -187,6 +199,8 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
                 className="nav-item mt-3"
                 onClick={() => {
                   setSelectedComponent("Support"), setActive("Support");
+
+                  window.location.href = "https://hlomail.in/pages/help.html";
                 }}
               >
                 <span
@@ -209,7 +223,11 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({ setSelectedComponent }) => {
             </ul>
           </div>
           <div className="card-footer text-center">
-            <button type="button" className="btn btn-sm bg-lite-purple px-4 button">
+            <button
+              type="button"
+              className="btn btn-sm bg-lite-purple px-4 button"
+              onClick={handleLogout}
+            >
               Log out
             </button>
           </div>

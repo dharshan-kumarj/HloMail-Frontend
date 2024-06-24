@@ -23,7 +23,7 @@ const Login = () => {
     const data = { email, password };
 
     try {
-      const response = await fetch("https://hlomail.sanjaysagar.com/login", {
+      const response = await fetch("https://api.hlomail.in/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,19 +35,20 @@ const Login = () => {
 
       if (response.ok) {
         // Save the token in the cookies
-        Cookies.set("token", responseData.token, { expires: 7, domain: "hlomail-frontend.sanjaysagar.com", secure: true });
-        
-        alert(responseData.token)
+        Cookies.set("token", responseData.token, {
+          expires: 7,
+          domain: "dashboard.hlomail.in",
+          secure: true,
+        });
+
         // Redirect to the dashboard
         window.location.href =
-          "https://hlomail-frontend.sanjaysagar.com/dashboard";
-      } 
-      else if (response.status==401){
+          "https://dashboard.hlomail.in";
+      } else if (response.status == 401) {
         setErrorMessage(
           responseData.message || "Incorrent username or password"
         );
-      }
-      else {
+      } else {
         setErrorMessage(
           responseData.message || "An error occurred during login"
         );
@@ -85,7 +86,8 @@ const Login = () => {
               className="btn btn-outline-light mb-2 mb-md-0"
               style={{ color: "#aa14f0", border: "1px solid #aa14f0" }}
               onClick={() =>
-                (window.location.href = "https://hlomail-frontend.sanjaysagar.com/register")
+                (window.location.href =
+                  "https://dashboard.hlomail.in/register")
               }
             >
               Register
@@ -93,19 +95,21 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="container d-flex flex-column justify-content-center align-items-center flex-grow-1">
+      <div className="container d-flex flex-column justify-content-center align-items-center flex-grow-1 pt-4">
         <div className="row justify-content-center w-100">
           <div className="col-md-10 col-lg-8 col-xl-6">
             <div
               className="card mx-auto"
               style={{
-                maxWidth: "800px",
+                maxWidth: "450px",
                 width: "100%",
                 height: "auto",
                 backgroundColor: "#FFFFFF",
                 borderRight: "7px solid #aa14f0",
                 borderBottom: "7px solid #aa14f0",
                 marginTop: "-150px",
+                
+                borderRadius: 30,
               }}
             >
               <div className="card-body d-flex flex-column justify-content-center align-items-center">
@@ -139,7 +143,7 @@ const Login = () => {
                       placeholder="Enter email"
                       required
                     />
-                  </div>
+                  </div> 
                   <div className="form-group fs-5 p-3">
                     <input
                       type="password"
@@ -151,10 +155,10 @@ const Login = () => {
                       required
                     />
                   </div>
-                  <div className="d-flex pt-3 d-grid gap-2 col-12 mx-auto justify-content-center">
+                  <div className="d-flex pt-3 d-grid gap-2 col-12 mx-auto justify-content-center form-control border-0">
                     <button
                       type="submit"
-                      className="btn btn-lg text-white form-control"
+                      className="btn  btn-lg text-white form-control"
                       style={{ backgroundColor: "#aa14f0" }}
                     >
                       Login
@@ -169,21 +173,21 @@ const Login = () => {
                       style={{ color: "#aa14f0", marginLeft: "10px" }}
                       onClick={() =>
                         (window.location.href =
-                          "https://hlomail-frontend.sanjaysagar.com/forgotpass")
+                          "https://dashboard.hlomail.in/forgotpass")
                       }
                     >
                       {" "}
                       Click here.
                     </span>
                   </h3>
-                  <div className="d-grid pt-3 mb-5 gap-2 col-12 mx-auto">
+                  <div className="d-grid pt-3 mb-5 mx-auto form-control border-0">
                     <button
-                      className="btn btn-outline-light text-black form-control"
+                      className="btn btn-outline-light text-black "
                       type="button"
                       style={{ border: "1px solid #aa14f0" }}
                       onClick={() =>
                         (window.location.href =
-                          "https://hlomail-frontend.sanjaysagar.com/register")
+                          "https://dashboard.hlomail.in/register")
                       }
                     >
                       Register New Account

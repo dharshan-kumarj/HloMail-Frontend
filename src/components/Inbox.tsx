@@ -53,7 +53,7 @@ const Inbox: React.FC = () => {
 
   const fetchProfileImage = async () => {
     try {
-      const response = await fetch("https://hlomail.sanjaysagar.com/logo", {
+      const response = await fetch("https://api.hlomail.in/logo", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,7 +73,7 @@ const Inbox: React.FC = () => {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch("https://hlomail.sanjaysagar.com/inbox", {
+      const response = await fetch("https://api.hlomail.in/inbox", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -112,7 +112,7 @@ const Inbox: React.FC = () => {
   const fetchMessageById = async (message_id: string) => {
     try {
       const response = await fetch(
-        `https://hlomail.sanjaysagar.com/inbox-message/${message_id}`,
+        `https://api.hlomail.in/inbox-message/${message_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

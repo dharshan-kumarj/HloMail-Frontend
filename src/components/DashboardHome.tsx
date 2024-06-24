@@ -42,7 +42,7 @@ const DashboardHome = ({ api_key }: Props) => {
 
       try {
         const response = await fetch(
-          "https://hlomail.sanjaysagar.com/dashboard",
+          "https://api.hlomail.in/dashboard",
           {
             method: "POST",
             headers: {
@@ -54,7 +54,7 @@ const DashboardHome = ({ api_key }: Props) => {
 
         if (response.status === 401) {
           window.location.href =
-            "https://hlomail-frontend.sanjaysagar.com/login";
+            "https://dashboard.hlomail.in/login";
           return;
         }
 
@@ -78,7 +78,7 @@ const DashboardHome = ({ api_key }: Props) => {
 
     try {
       const response = await fetch(
-        "https://hlomail.sanjaysagar.com/api-dashboard",
+        "https://api.hlomail.in/api-dashboard",
         {
           method: "POST",
           headers: {
@@ -92,7 +92,7 @@ const DashboardHome = ({ api_key }: Props) => {
       );
 
       if (response.status === 401) {
-        window.location.href = "https://hlomail-frontend.sanjaysagar.com/login";
+        window.location.href = "https://dashboard.hlomail.in/login";
         return;
       }
 
@@ -115,7 +115,7 @@ const DashboardHome = ({ api_key }: Props) => {
     const token = Cookies.get("token");
 
     try {
-      const response = await fetch("https://hlomail.sanjaysagar.com/logs", {
+      const response = await fetch("https://api.hlomail.in/logs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -128,7 +128,7 @@ const DashboardHome = ({ api_key }: Props) => {
       });
 
       if (response.status === 401) {
-        window.location.href = "https://hlomail-frontend.sanjaysagar.com/login";
+        window.location.href = "https://dashboard.hlomail.in/login";
         return;
       }
 
