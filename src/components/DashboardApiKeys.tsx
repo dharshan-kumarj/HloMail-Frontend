@@ -67,7 +67,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
       });
 
       if (response.status === 401) {
-        window.location.href = "https://dashboard-hlomail.onrender.com/login";
+        window.location.href = "https://dashboard-hlomail-bm2m.onrender.com/login";
         return;
       }
 

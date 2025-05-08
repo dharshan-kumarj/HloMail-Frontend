@@ -12,7 +12,7 @@ const checkToken = async () => {
   const token = Cookies.get("token");
 
   if (!token) {
-    window.location.href = "https://dashboard-hlomail.onrender.com/login";
+    window.location.href = "https://dashboard-hlomail-bm2m.onrender.com/login";
     return;
   }
 };
