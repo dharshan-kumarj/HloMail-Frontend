@@ -87,11 +87,11 @@ function Register() {
               // Save the token in the cookies
               Cookies.set("token", responseData.token, {
                 expires: 7,
-                domain: "localhost:5173",
+                domain: "https://dashboard-hlomail.onrender.com",
                 secure: true,
               });
               // Redirect to the dashboard
-              window.location.href = 'http://localhost:5173';
+              window.location.href = 'https://dashboard-hlomail.onrender.com';
             } else {
               setErrorMessage(responseData.message || 'An error occurred during login');
             }
@@ -101,7 +101,7 @@ function Register() {
           }
 
           // Redirect to the dashboard
-          window.location.href = 'http://localhost:5173';
+          window.location.href = 'https://dashboard-hlomail.onrender.com';
         } else {
           alert('Wrong OTP. Please try again.');
         }
@@ -160,7 +160,7 @@ function Register() {
             <button
               className="btn btn-outline-light mb-2 mb-md-0"
               style={{ color: "#aa14f0", border: "1px solid #aa14f0" }}
-              onClick={() => window.location.href = "http://localhost:5173/login"}
+              onClick={() => window.location.href = "https://dashboard-hlomail.onrender.com/login"}
             >
               Login
             </button>

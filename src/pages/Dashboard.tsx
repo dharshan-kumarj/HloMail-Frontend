@@ -6,13 +6,13 @@ import Inbox from "../components/Inbox";
 import LeftSidebar from "../components/LeftSidebar";
 import DashboardHome from "../components/DashboardHome";
 import ApiKeyComponent from "../components/DashboardApiKeys";
-import Credits from "../components/CreditComponent";
+// import Credits from "../components/CreditComponent";
 
 const checkToken = async () => {
   const token = Cookies.get("token");
 
   if (!token) {
-    window.location.href = "http://localhost:5173/login";
+    window.location.href = "https://dashboard-hlomail.onrender.com/login";
     return;
   }
 };
@@ -36,8 +36,8 @@ const Dashboard: React.FC = () => {
         return <DashboardHome api_key={selectedApiKey} />;
       case "API Key":
         return <ApiKeyComponent handleApiKeyClick={handleApiKeyClick} />;
-      case "Credits":
-        return <Credits></Credits>
+      // case "Credits":
+        // return <Credits></Credits>
       default:
         return <ApiKeyComponent handleApiKeyClick={handleApiKeyClick} />;
     }

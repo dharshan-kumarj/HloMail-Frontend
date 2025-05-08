@@ -11,7 +11,7 @@ const ForgotPass = () => {
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://api.hlomail.in/forgot-password', {
+      const response = await fetch('https://hlomail-backend.onrender.com/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ const ForgotPass = () => {
         body: JSON.stringify({ email }),
       });
       if (response.ok) {
-        const data = await response.json();
+        // const data = await response.json();
         setMessage('Password reset link sent successfully!');
       } else {
         const errorData = await response.json();

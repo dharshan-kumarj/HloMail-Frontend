@@ -164,7 +164,7 @@ const DashboardHome = ({ api_key }: Props) => {
       for (let key in data) {
         if (data.hasOwnProperty(key)) {
           // Assign the value from data[key] to week_data[key]
-          week_data[key] = data[key]; 
+          // week_data[key] = data[key]; 
         }
       }
 

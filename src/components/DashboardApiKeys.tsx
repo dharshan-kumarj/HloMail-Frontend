@@ -6,7 +6,7 @@ import DeletePopUp from "./DeletePopUp";
 import edit_icon from "../images/dashboard/edit-icon.svg";
 import delete_icon from "../images/dashboard/delete-icon.svg";
 import copy_icon from "../images/dashboard/copy-icon.svg";
-import user_icon from "../images/dashboard/user-icon.svg";
+// import user_icon from "../images/dashboard/user-icon.svg";
 
 
 interface DashboardApiKeys {
@@ -23,9 +23,9 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
   const [loading, setLoading] = useState(true);
   const [action, setAction] = useState("");
   const token = Cookies.get("token");
-  const [copyApiModalShow, setCopyApiModalShow] = useState(false);
+  // const [copyApiModalShow, setCopyApiModalShow] = useState(false);
   const [selectedApiKey, setSelectedApiKey] = useState("");
-  const [copySuccess, setCopySuccess] = useState(false);
+  // const [copySuccess,] = useState(false);
   const [copyMessage, setCopyMessage] = useState("");
 
   const fetchApiKeyData = () => {
@@ -67,7 +67,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
       });
 
       if (response.status === 401) {
-        window.location.href = "http://localhost:5173/login";
+        window.location.href = "https://dashboard-hlomail.onrender.com/login";
         return;
       }
 
