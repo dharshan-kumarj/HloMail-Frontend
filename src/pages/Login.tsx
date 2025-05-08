@@ -42,7 +42,7 @@ const Login = () => {
         });
 
         // Redirect to the dashboard
-        window.location.href = "https://dashboard-hlomail-bm2m.onrender.com/";
+        window.location.href = "https://dashboard.hlomail.in/";
       } else if (response.status == 401) {
         setErrorMessage(
           responseData.message || "Incorrect username or password"
@@ -86,7 +86,7 @@ const Login = () => {
               style={{ color: "#aa14f0", border: "1px solid #aa14f0" }}
               onClick={() =>
                 (window.location.href =
-                  "https://dashboard-hlomail-bm2m.onrender.com/register")
+                  "https://dashboard.hlomail.in/register")
               }
             >
               Register
@@ -171,7 +171,7 @@ const Login = () => {
                       style={{ color: "#aa14f0", marginLeft: "10px" }}
                       onClick={() =>
                         (window.location.href =
-                          "https://dashboard-hlomail-bm2m.onrender.com/forgotpass")
+                          "https://dashboard.hlomail.in/forgotpass")
                       }
                     >
                       {" "}
@@ -185,7 +185,7 @@ const Login = () => {
                       style={{ border: "1px solid #aa14f0" }}
                       onClick={() =>
                         (window.location.href =
-                          "https://dashboard-hlomail-bm2m.onrender.com/register")
+                          "https://dashboard.hlomail.in/register")
                       }
                     >
                       Register New Account

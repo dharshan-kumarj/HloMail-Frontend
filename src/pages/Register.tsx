@@ -160,7 +160,7 @@ function Register() {
             <button
               className="btn btn-outline-light mb-2 mb-md-0"
               style={{ color: "#aa14f0", border: "1px solid #aa14f0" }}
-              onClick={() => window.location.href = "https://dashboard-hlomail-bm2m.onrender.com/login"}
+              onClick={() => window.location.href = "https://dashboard.hlomail.in/login"}
             >
               Login
             </button>
