@@ -11,7 +11,7 @@ const ForgotPass = () => {
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://hlomail-backend.onrender.com/forgot-password', {
+      const response = await fetch('https://api.hlomail.in/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

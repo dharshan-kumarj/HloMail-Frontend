@@ -34,7 +34,7 @@ function Register() {
       password,
     };
     setShowOtpInput(true);
-    fetch('https://hlomail-backend.onrender.com/register', {
+    fetch('https://api.hlomail.in/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function Register() {
   };
 
   const handleVerify = () => {
-    fetch('https://hlomail-backend.onrender.com/verify', {
+    fetch('https://api.hlomail.in/verify', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ function Register() {
           console.log(data);
 
           try {
-            const response = await fetch('https://hlomail-backend.onrender.com/login', {
+            const response = await fetch('https://api.hlomail.in/login', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ function Register() {
       password,
     };
 
-    fetch('https://hlomail-backend.onrender.com/register', {
+    fetch('https://api.hlomail.in//register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

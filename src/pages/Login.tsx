@@ -23,7 +23,7 @@ const Login = () => {
     const data = { email, password };
 
     try {
-      const response = await fetch("https://hlomail-backend.onrender.com/login", {
+      const response = await fetch("https://api.hlomail.in/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -34,7 +34,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
       "Content-Type": "application/json",
     };
 
-    fetch("https://hlomail-backend.onrender.com/dashboard", {
+    fetch("https://api.hlomail.in/dashboard", {
       method: "POST",
       headers,
     })
@@ -98,7 +98,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
       const body = { api_key: selectedApiKey };
       FetchData(
         "POST",
-        "https://hlomail-backend.onrender.com/delete-apikey",
+        "https://api.hlomail.in/delete-apikey",
         headers,
         body
       );
@@ -119,7 +119,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
       const body = { api_key: selectedApiKey, title: value };
       FetchData(
         "POST",
-        "https://hlomail-backend.onrender.com/edit-apikey",
+        "https://api.hlomail.in/edit-apikey",
         headers,
         body
       );
@@ -140,7 +140,7 @@ const DashboardApiKeys: React.FC<DashboardApiKeys> = ({
       const body = { api_type: value[0], title: value[1] };
       FetchData(
         "POST",
-        "https://hlomail-backend.onrender.com/add-apikey",
+        "https://api.hlomail.in/add-apikey",
         headers,
         body
       );

@@ -21,7 +21,7 @@ const ResetPass = () => {
     }
     try {
       const response = await fetch(
-        `https://hlomail-backend.onrender.com/reset-password?token=${token}`,
+        `https://api.hlomail.in/reset-password?token=${token}`,
         {
           method: "POST",
           headers: {
