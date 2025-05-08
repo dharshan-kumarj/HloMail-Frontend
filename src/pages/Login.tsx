@@ -23,7 +23,7 @@ const Login = () => {
     const data = { email, password };
 
     try {
-      const response = await fetch("https://api.hlomail.in/login", {
+      const response = await fetch("https://hlomail-backend.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,19 +34,18 @@ const Login = () => {
       const responseData = await response.json();
 
       if (response.ok) {
-        // Save the token in the cookies
+        // Fixed cookie setting - removed domain parameter and set secure to false for localhost
         Cookies.set("token", responseData.token, {
           expires: 7,
-          domain: "dashboard.hlomail.in",
-          secure: true,
+          secure: false,
+          path: "/"
         });
 
         // Redirect to the dashboard
-        window.location.href =
-          "https://dashboard.hlomail.in";
+        window.location.href = "http://localhost:5173/";
       } else if (response.status == 401) {
         setErrorMessage(
-          responseData.message || "Incorrent username or password"
+          responseData.message || "Incorrect username or password"
         );
       } else {
         setErrorMessage(
@@ -87,7 +86,7 @@ const Login = () => {
               style={{ color: "#aa14f0", border: "1px solid #aa14f0" }}
               onClick={() =>
                 (window.location.href =
-                  "https://dashboard.hlomail.in/register")
+                  "http://localhost:5173/register")
               }
             >
               Register
@@ -108,7 +107,6 @@ const Login = () => {
                 borderRight: "7px solid #aa14f0",
                 borderBottom: "7px solid #aa14f0",
                 marginTop: "-150px",
-                
                 borderRadius: 30,
               }}
             >
@@ -173,7 +171,7 @@ const Login = () => {
                       style={{ color: "#aa14f0", marginLeft: "10px" }}
                       onClick={() =>
                         (window.location.href =
-                          "https://dashboard.hlomail.in/forgotpass")
+                          "http://localhost:5173/forgotpass")
                       }
                     >
                       {" "}
@@ -187,7 +185,7 @@ const Login = () => {
                       style={{ border: "1px solid #aa14f0" }}
                       onClick={() =>
                         (window.location.href =
-                          "https://dashboard.hlomail.in/register")
+                          "http://localhost:5173/register")
                       }
                     >
                       Register New Account

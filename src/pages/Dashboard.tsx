@@ -12,7 +12,7 @@ const checkToken = async () => {
   const token = Cookies.get("token");
 
   if (!token) {
-    window.location.href = "https://dashboard.hlomail.in/login";
+    window.location.href = "http://localhost:5173/login";
     return;
   }
 };
@@ -25,7 +25,6 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     checkToken();
   }, []);
-
   const handleApiKeyClick = (apiKey: string) => {
     setSelectedApiKey(apiKey);
     setSelectedComponent("Dashboard");
